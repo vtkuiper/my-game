@@ -1,85 +1,59 @@
-let characters = [];
-let gold = 0;
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
-function createCharacter() {
-    let character = {
-        maxHp: Math.floor(Math.random() * 11) + 10,
-        damage: Math.floor(Math.random() * 5) + 1,
-        level: 1,
-        kills: 0
-    };
-    characters.push(character);
-    displayCharacters();
+const gridSize = 20;
+const tileCount = canvas.width / gridSize;
+let snake = [{ x: 10, y: 10 }];
+let direction = { x: 0, y: 0 };
+let food = { x: 15, y: 15 };
+let score = 0;
+
+document.addEventListener('keydown', (event) => {
+    switch (event.key) {
+        case 'ArrowUp':
+            if (direction.y === 0) direction = { x: 0, y: -1 };
+            break;
+        case 'ArrowDown':
+            if (direction.y === 0) direction = { x: 0, y: 1 };
+            break;
+        case 'ArrowLeft':
+            if (direction.x === 0) direction = { x: -1, y: 0 };
+            break;
+        case 'ArrowRight':
+            if (direction.x === 0) direction = { x: 1, y: 0 };
+            break;
+    }
+});
+
+function gameLoop() {
+    const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+    if (head.x === food.x && head.y === food.y) {
+        score++;
+        food = { x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount) };
+    } else {
+        snake.pop();
+    }
+
+    snake.unshift(head);
+
+    if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount || snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
+        alert('Game Over! Your score: ' + score);
+        snake = [{ x: 10, y: 10 }];
+        direction = { x: 0, y: 0 };
+        score = 0;
+    }
+
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#3498db';
+    snake.forEach(segment => ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize));
+
+    ctx.fillStyle = '#e74c3c';
+    ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize);
+
+    requestAnimationFrame(gameLoop);
 }
 
-function displayCharacters() {
-    let charactersDiv = document.getElementById('characters');
-    charactersDiv.innerHTML = '';
-    characters.forEach((character, index) => {
-        charactersDiv.innerHTML += `<div>Character ${index + 1}: HP: ${character.maxHp}, Damage: ${character.damage}, Level: ${character.level}</div>`;
-    });
-}
-
-function heal() {
-    characters.forEach(character => {
-        character.hp = character.maxHp;
-    });
-    alert("All characters healed!");
-}
-
-function goToForest() {
-    document.getElementById('village').style.display = 'none';
-    document.getElementById('forest').style.display = 'block';
-}
-
-function showQuestBoard() {
-    document.getElementById('village').style.display = 'none';
-    document.getElementById('questBoard').style.display = 'block';
-}
-
-function visitBlacksmith() {
-    document.getElementById('village').style.display = 'none';
-    document.getElementById('blacksmith').style.display = 'block';
-}
-
-function goToVillage() {
-    document.getElementById('village').style.display = 'block';
-    document.getElementById('forest').style.display = 'none';
-    document.getElementById('questBoard').style.display = 'none';
-    document.getElementById('blacksmith').style.display = 'none';
-}
-
-function adventure() {
-    let enemy = {
-        maxHp: Math.floor(Math.random() * 6) + 5,
-        damage: Math.floor(Math.random() * 3) + 1
-    };
-    displayEnemy(enemy);
-    // Battle logic here
-}
-
-function displayEnemy(enemy) {
-    let enemiesDiv = document.getElementById('enemies');
-    enemiesDiv.innerHTML = `<div>Enemy: HP: ${enemy.maxHp}, Damage: ${enemy.damage}</div>`;
-}
-
-function acceptQuest() {
-    let quest = {
-        enemiesToKill: Math.floor(Math.random() * 3) + 3,
-        reward: Math.floor(Math.random() * 50) + 50
-    };
-    alert(`Quest accepted! Kill ${quest.enemiesToKill} enemies to earn ${quest.reward} gold.`);
-}
-
-function upgradeWeapon() {
-    characters.forEach(character => {
-        character.damage += 1;
-    });
-    gold -= 100; // Assuming upgrade costs 100 gold
-    alert("Weapon upgraded!");
-}
-
-// Create initial characters
-for (let i = 0; i < 5; i++) {
-    createCharacter();
-}
+requestAnimationFrame(gameLoop);
