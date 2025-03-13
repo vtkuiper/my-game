@@ -6,6 +6,12 @@ let character = {
     kills: 0
 };
 
+let enemy = {
+    hp: Math.floor(Math.random() * 5) + 1,
+    stamina: Math.floor(Math.random() * 3) + 1,
+    damage: Math.floor(Math.random() * 3) + 1
+};
+
 function updateCharacter() {
     document.getElementById('hp').innerText = character.hp;
     document.getElementById('stamina').innerText = character.stamina;
@@ -14,12 +20,16 @@ function updateCharacter() {
     document.getElementById('kills').innerText = character.kills;
 }
 
+function updateEnemy() {
+    document.getElementById('enemy-hp').innerText = enemy.hp;
+    document.getElementById('enemy-stamina').innerText = enemy.stamina;
+    document.getElementById('enemy-damage').innerText = enemy.damage;
+}
+
 function adventure() {
-    let enemyHp = Math.floor(Math.random() * 11) + 10;
-    let enemyDamage = Math.floor(Math.random() * 5) + 1;
-    while (character.hp > 0 && enemyHp > 0) {
-        enemyHp -= character.damage;
-        character.hp -= enemyDamage;
+    while (character.hp > 0 && enemy.hp > 0) {
+        enemy.hp -= character.damage;
+        character.hp -= enemy.damage;
     }
     if (character.hp <= 0) {
         document.getElementById('log').innerText = "Character is dead!";
@@ -40,8 +50,14 @@ function adventure() {
         if (character.kills >= Math.pow(2, character.level - 1)) {
             character.level++;
         }
+        enemy = {
+            hp: Math.floor(Math.random() * 5) + 1,
+            stamina: Math.floor(Math.random() * 3) + 1,
+            damage: Math.floor(Math.random() * 3) + 1
+        };
     }
     updateCharacter();
+    updateEnemy();
 }
 
 function rest() {
@@ -50,3 +66,4 @@ function rest() {
 }
 
 updateCharacter();
+updateEnemy();
