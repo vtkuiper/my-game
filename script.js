@@ -24,8 +24,8 @@ function updateCharacters() {
             <p>Damage: <span>${character.damage}</span></p>
             <p>Level: <span>${character.level}</span></p>
             <p>Kills: <span>${character.kills}</span></p>
-            <button onclick="adventure(${index})">Adventure</button>
-            <button onclick="rest(${index})">Rest</button>
+            <button onclick="adventure(${index})" style="display:none;">Adventure</button>
+            <button onclick="rest(${index})" style="display:none;">Rest</button>
         `;
         charactersDiv.appendChild(characterDiv);
     });
@@ -35,6 +35,22 @@ function updateEnemy() {
     document.getElementById('enemy-hp').innerText = enemy.hp;
     document.getElementById('enemy-stamina').innerText = enemy.stamina;
     document.getElementById('enemy-damage').innerText = enemy.damage;
+}
+
+function goToForest() {
+    document.getElementById('location-description').innerText = "You are in the forest.";
+    document.querySelector('button[onclick="goToForest()"]').style.display = 'none';
+    document.querySelector('button[onclick="restInVillage()"]').style.display = 'none';
+    document.querySelector('button[onclick="adventure()"]').style.display = 'inline-block';
+    document.querySelector('button[onclick="goToVillage()"]').style.display = 'inline-block';
+}
+
+function goToVillage() {
+    document.getElementById('location-description').innerText = "You are in the village.";
+    document.querySelector('button[onclick="goToForest()"]').style.display = 'inline-block';
+    document.querySelector('button[onclick="restInVillage()"]').style.display = 'inline-block';
+    document.querySelector('button[onclick="adventure()"]').style.display = 'none';
+    document.querySelector('button[onclick="goToVillage()"]').style.display = 'none';
 }
 
 function adventure(index) {
@@ -49,7 +65,7 @@ function adventure(index) {
     } else {
         character.kills++;
         document.getElementById('log').innerText = "Enemy defeated!";
-        if (Math.random() < 0.2) {
+        if (Math.random() < 0.2 && characters.length < 5) {
             characters.push({
                 hp: Math.floor(Math.random() * 11) + 10,
                 stamina: Math.floor(Math.random() * 10) + 1,
@@ -72,9 +88,10 @@ function adventure(index) {
     updateEnemy();
 }
 
-function rest(index) {
-    let character = characters[index];
-    character.hp += character.stamina;
+function restInVillage() {
+    characters.forEach(character => {
+        character.hp += character.stamina;
+    });
     updateCharacters();
 }
 
