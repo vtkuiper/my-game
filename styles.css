@@ -1,12 +1,22 @@
-body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #000;
+body { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    margin: 0; 
+    font-family: Arial, sans-serif; 
 }
-
-canvas {
-    border: 1px solid #fff;
+.game-container { 
+    display: grid; 
+    grid-template-columns: repeat(4, 100px); 
+    grid-gap: 10px; 
+}
+.tile { 
+    width: 100px; 
+    height: 100px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 2em; 
+    background-color: #ccc; 
 }
