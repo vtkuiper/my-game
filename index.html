@@ -17,13 +17,23 @@
     <div id="forest" style="display:none;">
         <h1>Forest</h1>
         <button onclick="adventure()">Adventure</button>
+        <button onclick="goToVillage()">Back to Village</button>
     </div>
-    <div id="display:none;">
+    <div id="questBoard" style="display:none;">
+        <h1>Quest Board</h1>
+        <button onclick="acceptQuest()">Accept Quest</button>
+        <button onclick="goToVillage()">Back to Village</button>
+    </div>
+    <div id="blacksmith" style="display:none;">
         <h1>Blacksmith</h1>
         <button onclick="upgradeWeapon()">Upgrade Weapon</button>
+        <button onclick="goToVillage()">Back to Village</button>
     </div>
-    <div id="characters">
+    <div id="characters" class="side">
         <!-- Characters will be displayed here -->
+    </div>
+    <div id="enemies" class="side">
+        <!-- Enemies will be displayed here -->
     </div>
     <script src="script.js"></script>
 </body>
