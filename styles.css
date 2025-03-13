@@ -10,18 +10,20 @@ body {
 
 #game {
     display: flex;
+    justify-content: space-between;
+    width: 80%;
     background-color: #3c3c3c;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-#player-characters, #enemy-characters {
+#player-characters, #game-area, #enemy-characters {
     margin: 10px;
     padding: 10px;
     background-color: #4c4c4c;
     border-radius: 10px;
-    width: 200px;
+    width: 30%;
 }
 
 button {
