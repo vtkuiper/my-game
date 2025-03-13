@@ -21,7 +21,10 @@ function displayCharacters() {
 }
 
 function heal() {
-    // Heal logic here
+    characters.forEach(character => {
+        character.hp = character.maxHp;
+    });
+    alert("All characters healed!");
 }
 
 function goToForest() {
@@ -39,20 +42,41 @@ function visitBlacksmith() {
     document.getElementById('blacksmith').style.display = 'block';
 }
 
+function goToVillage() {
+    document.getElementById('village').style.display = 'block';
+    document.getElementById('forest').style.display = 'none';
+    document.getElementById('questBoard').style.display = 'none';
+    document.getElementById('blacksmith').style.display = 'none';
+}
+
 function adventure() {
     let enemy = {
         maxHp: Math.floor(Math.random() * 6) + 5,
         damage: Math.floor(Math.random() * 3) + 1
     };
+    displayEnemy(enemy);
     // Battle logic here
 }
 
+function displayEnemy(enemy) {
+    let enemiesDiv = document.getElementById('enemies');
+    enemiesDiv.innerHTML = `<div>Enemy: HP: ${enemy.maxHp}, Damage: ${enemy.damage}</div>`;
+}
+
 function acceptQuest() {
-    // Quest logic here
+    let quest = {
+        enemiesToKill: Math.floor(Math.random() * 3) + 3,
+        reward: Math.floor(Math.random() * 50) + 50
+    };
+    alert(`Quest accepted! Kill ${quest.enemiesToKill} enemies to earn ${quest.reward} gold.`);
 }
 
 function upgradeWeapon() {
-    // Upgrade logic here
+    characters.forEach(character => {
+        character.damage += 1;
+    });
+    gold -= 100; // Assuming upgrade costs 100 gold
+    alert("Weapon upgraded!");
 }
 
 // Create initial characters
