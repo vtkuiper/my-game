@@ -3,38 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medieval Fantasy Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="village">
-        <h1>Village</h1>
-        <button onclick="heal()">Heal</button>
-        <button onclick="goToForest()">Go to Forest</button>
-        <button onclick="showQuestBoard()">Quest Board</button>
-        <button onclick="visitBlacksmith()">Blacksmith</button>
-    </div>
-    <div id="forest" style="display:none;">
-        <h1>Forest</h1>
-        <button onclick="adventure()">Adventure</button>
-        <button onclick="goToVillage()">Back to Village</button>
-    </div>
-    <div id="questBoard" style="display:none;">
-        <h1>Quest Board</h1>
-        <button onclick="acceptQuest()">Accept Quest</button>
-        <button onclick="goToVillage()">Back to Village</button>
-    </div>
-    <div id="blacksmith" style="display:none;">
-        <h1>Blacksmith</h1>
-        <button onclick="upgradeWeapon()">Upgrade Weapon</button>
-        <button onclick="goToVillage()">Back to Village</button>
-    </div>
-    <div id="characters" class="side">
-        <!-- Characters will be displayed here -->
-    </div>
-    <div id="enemies" class="side">
-        <!-- Enemies will be displayed here -->
-    </div>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
     <script src="script.js"></script>
 </body>
 </html>
