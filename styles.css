@@ -1,12 +1,13 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+.window {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    cursor: grab;
 }
-
-canvas {
-    border: 1px solid #000;
+.square {
+    background-color: red;
+}
+.circle {
+    background-color: blue;
+    border-radius: 50%;
 }
