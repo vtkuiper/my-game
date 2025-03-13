@@ -1,13 +1,12 @@
-.window {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    cursor: grab;
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
 }
-.square {
-    background-color: red;
-}
-.circle {
-    background-color: blue;
-    border-radius: 50%;
+
+canvas {
+    border: 1px solid #fff;
 }
