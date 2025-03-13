@@ -1,55 +1,66 @@
-// JavaScript code for draggable windows and physics
-const square = document.getElementById('square');
-const circle = document.getElementById('circle');
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
-let isDragging = false;
-let offsetX, offsetY;
+const tileSize = 32;
+const mapWidth = 25;
+const mapHeight = 18;
 
-function onMouseDown(event) {
-    isDragging = true;
-    offsetX = event.clientX - event.target.offsetLeft;
-    offsetY = event.clientY - event.target.offsetTop;
-    event.target.style.cursor = 'grabbing';
+let player = {
+    x: Math.floor(mapWidth / 2),
+    y: Math.floor(mapHeight / 2),
+    color: 'blue'
+};
+
+let map = generateMap();
+
+function generateMap() {
+    let map = [];
+    for (let y = 0; y < mapHeight; y++) {
+        let row = [];
+        for (let x = 0; x < mapWidth; x++) {
+            row.push(Math.random() > 0.8 ? 1 : 0); // 20% kans op een muur
+        }
+        map.push(row);
+    }
+    return map;
 }
 
-function onMouseMove(event) {
-    if (isDragging) {
-        event.target.style.left = `${event.clientX - offsetX}px`;
-        event.target.style.top = `${event.clientY - offsetY}px`;
+function drawMap() {
+    for (let y = 0; y < mapHeight; y++) {
+        for (let x = 0; x < mapWidth; x++) {
+            ctx.fillStyle = map[y][x] === 1 ? 'gray' : 'black';
+            ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+        }
     }
 }
 
-function onMouseUp(event) {
-    isDragging = false;
-    event.target.style.cursor = 'grab';
+function drawPlayer() {
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x * tileSize, player.y * tileSize, tileSize, tileSize);
 }
 
-square.addEventListener('mousedown', onMouseDown);
-square.addEventListener('mousemove', onMouseMove);
-square.addEventListener('mouseup', onMouseUp);
+function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawMap();
+    drawPlayer();
+    requestAnimationFrame(gameLoop);
+}
 
-circle.addEventListener('mousedown', onMouseDown);
-circle.addEventListener('mousemove', onMouseMove);
-circle.addEventListener('mouseup', onMouseUp);
-
-// Matter.js physics setup
-const { Engine, Render, World, Bodies } = Matter;
-
-const engine = Engine.create();
-const render = Render.create({
-    element: document.body,
-    engine: engine,
-    options: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        wireframes: false
+document.addEventListener('keydown', (event) => {
+    switch (event.key) {
+        case 'ArrowUp':
+            if (player.y > 0 && map[player.y - 1][player.x] === 0) player.y--;
+            break;
+        case 'ArrowDown':
+            if (player.y < mapHeight - 1 && map[player.y + 1][player.x] === 0) player.y++;
+            break;
+        case 'ArrowLeft':
+            if (player.x > 0 && map[player.y][player.x - 1] === 0) player.x--;
+            break;
+        case 'ArrowRight':
+            if (player.x < mapWidth - 1 && map[player.y][player.x + 1] === 0) player.x++;
+            break;
     }
 });
 
-const squareBody = Bodies.rectangle(200, 200, 100, 100);
-const circleBody = Bodies.circle(400, 200, 50);
-
-World.add(engine.world, [squareBody, circleBody]);
-
-Engine.run(engine);
-Render.run(render);
+gameLoop();
