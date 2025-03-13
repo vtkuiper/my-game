@@ -5,6 +5,7 @@ function drawBoard() {
     tiles.forEach((tile, index) => {
         tile.textContent = board[index] ? board[index] : '';
         tile.style.backgroundColor = board[index] ? '#eee' : '#ccc';
+        tile.setAttribute('data-value', board[index]);
     });
 }
 
