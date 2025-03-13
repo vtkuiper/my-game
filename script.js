@@ -1,10 +1,10 @@
-let character = {
+let characters = [{
     hp: Math.floor(Math.random() * 11) + 10,
     stamina: Math.floor(Math.random() * 10) + 1,
     damage: Math.floor(Math.random() * 5) + 1,
     level: 1,
     kills: 0
-};
+}];
 
 let enemy = {
     hp: Math.floor(Math.random() * 5) + 1,
@@ -12,12 +12,23 @@ let enemy = {
     damage: Math.floor(Math.random() * 3) + 1
 };
 
-function updateCharacter() {
-    document.getElementById('hp').innerText = character.hp;
-    document.getElementById('stamina').innerText = character.stamina;
-    document.getElementById('damage').innerText = character.damage;
-    document.getElementById('level').innerText = character.level;
-    document.getElementById('kills').innerText = character.kills;
+function updateCharacters() {
+    const charactersDiv = document.getElementById('characters');
+    charactersDiv.innerHTML = '';
+    characters.forEach((character, index) => {
+        const characterDiv = document.createElement('div');
+        characterDiv.innerHTML = `
+            <p>Character ${index + 1}</p>
+            <p>HP: <span>${character.hp}</span></p>
+            <p>Stamina: <span>${character.stamina}</span></p>
+            <p>Damage: <span>${character.damage}</span></p>
+            <p>Level: <span>${character.level}</span></p>
+            <p>Kills: <span>${character.kills}</span></p>
+            <button onclick="adventure(${index})">Adventure</button>
+            <button onclick="rest(${index})">Rest</button>
+        `;
+        charactersDiv.appendChild(characterDiv);
+    });
 }
 
 function updateEnemy() {
@@ -26,25 +37,26 @@ function updateEnemy() {
     document.getElementById('enemy-damage').innerText = enemy.damage;
 }
 
-function adventure() {
+function adventure(index) {
+    let character = characters[index];
     while (character.hp > 0 && enemy.hp > 0) {
         enemy.hp -= character.damage;
         character.hp -= enemy.damage;
     }
     if (character.hp <= 0) {
-        document.getElementById('log').innerText = "Character is dead!";
-        character = null;
+        document.getElementById('log').innerText = `Character ${index + 1} is dead!`;
+        characters.splice(index, 1);
     } else {
         character.kills++;
         document.getElementById('log').innerText = "Enemy defeated!";
         if (Math.random() < 0.2) {
-            character = {
+            characters.push({
                 hp: Math.floor(Math.random() * 11) + 10,
                 stamina: Math.floor(Math.random() * 10) + 1,
                 damage: Math.floor(Math.random() * 5) + 1,
                 level: 1,
                 kills: 0
-            };
+            });
             document.getElementById('log').innerText += " New character acquired!";
         }
         if (character.kills >= Math.pow(2, character.level - 1)) {
@@ -56,14 +68,15 @@ function adventure() {
             damage: Math.floor(Math.random() * 3) + 1
         };
     }
-    updateCharacter();
+    updateCharacters();
     updateEnemy();
 }
 
-function rest() {
+function rest(index) {
+    let character = characters[index];
     character.hp += character.stamina;
-    updateCharacter();
+    updateCharacters();
 }
 
-updateCharacter();
+updateCharacters();
 updateEnemy();
