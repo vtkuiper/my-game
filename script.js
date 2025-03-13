@@ -43,6 +43,8 @@ function goToForest() {
     document.querySelector('button[onclick="rest()"]').style.display = 'none';
     document.querySelector('button[onclick="fight()"]').style.display = 'inline-block';
     document.querySelector('button[onclick="goToVillage()"]').style.display = 'inline-block';
+    document.querySelectorAll('button[onclick^="fight"]').forEach(button => button.style.display = 'inline-block');
+    document.querySelectorAll('button[onclick^="rest"]').forEach(button => button.style.display = 'none');
 }
 
 function goToVillage() {
@@ -51,6 +53,8 @@ function goToVillage() {
     document.querySelector('button[onclick="rest()"]').style.display = 'inline-block';
     document.querySelector('button[onclick="fight()"]').style.display = 'none';
     document.querySelector('button[onclick="goToVillage()"]').style.display = 'none';
+    document.querySelectorAll('button[onclick^="fight"]').forEach(button => button.style.display = 'none');
+    document.querySelectorAll('button[onclick^="rest"]').forEach(button => button.style.display = 'inline-block');
 }
 
 function fight(index) {
@@ -88,10 +92,9 @@ function fight(index) {
     updateEnemy();
 }
 
-function rest() {
-    characters.forEach(character => {
-        character.hp += character.stamina;
-    });
+function rest(index) {
+    let character = characters[index];
+    character.hp += character.stamina;
     updateCharacters();
 }
 
