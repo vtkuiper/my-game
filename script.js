@@ -24,7 +24,7 @@ function updateCharacters() {
             <p>Damage: <span>${character.damage}</span></p>
             <p>Level: <span>${character.level}</span></p>
             <p>Kills: <span>${character.kills}</span></p>
-            <button onclick="adventure(${index})" style="display:none;">Adventure</button>
+            <button onclick="fight(${index})" style="display:none;">Fight</button>
             <button onclick="rest(${index})" style="display:none;">Rest</button>
         `;
         charactersDiv.appendChild(characterDiv);
@@ -40,20 +40,20 @@ function updateEnemy() {
 function goToForest() {
     document.getElementById('location-description').innerText = "You are in the forest.";
     document.querySelector('button[onclick="goToForest()"]').style.display = 'none';
-    document.querySelector('button[onclick="restInVillage()"]').style.display = 'none';
-    document.querySelector('button[onclick="adventure()"]').style.display = 'inline-block';
+    document.querySelector('button[onclick="rest()"]').style.display = 'none';
+    document.querySelector('button[onclick="fight()"]').style.display = 'inline-block';
     document.querySelector('button[onclick="goToVillage()"]').style.display = 'inline-block';
 }
 
 function goToVillage() {
     document.getElementById('location-description').innerText = "You are in the village.";
     document.querySelector('button[onclick="goToForest()"]').style.display = 'inline-block';
-    document.querySelector('button[onclick="restInVillage()"]').style.display = 'inline-block';
-    document.querySelector('button[onclick="adventure()"]').style.display = 'none';
+    document.querySelector('button[onclick="rest()"]').style.display = 'inline-block';
+    document.querySelector('button[onclick="fight()"]').style.display = 'none';
     document.querySelector('button[onclick="goToVillage()"]').style.display = 'none';
 }
 
-function adventure(index) {
+function fight(index) {
     let character = characters[index];
     while (character.hp > 0 && enemy.hp > 0) {
         enemy.hp -= character.damage;
@@ -88,7 +88,7 @@ function adventure(index) {
     updateEnemy();
 }
 
-function restInVillage() {
+function rest() {
     characters.forEach(character => {
         character.hp += character.stamina;
     });
