@@ -3,32 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Game</title>
+    <title>Medieval Fantasy Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="game">
-        <div id="player-characters">
-            <h2>Player Characters</h2>
-            <div id="characters"></div>
-        </div>
-        <div id="game-area">
-            <h2>Game Area</h2>
-            <div id="location-description">You are in the village.</div>
-            <button onclick="goToForest()">Go to Forest</button>
-            <button onclick="rest()">Rest</button>
-            <button onclick="fight()" style="display:none;">Fight</button>
-            <button onclick="goToVillage()" style="display:none;">Go to Village</button>
-        </div>
-        <div id="enemy-characters">
-            <h2>Enemy</h2>
-            <div id="enemy">
-                <p>HP: <span id="enemy-hp"></span></p>
-                <p>Stamina: <span id="enemy-stamina"></span></p>
-                <p>Damage: <span id="enemy-damage"></span></p>
-            </div>
-        </div>
-        <div id="log"></div>
+    <div id="village">
+        <h1>Village</h1>
+        <button onclick="heal()">Heal</button>
+        <button onclick="goToForest()">Go to Forest</button>
+        <button onclick="showQuestBoard()">Quest Board</button>
+        <button onclick="visitBlacksmith()">Blacksmith</button>
+    </div>
+    <div id="forest" style="display:none;">
+        <h1>Forest</h1>
+        <button onclick="adventure()">Adventure</button>
+    </div>
+    <div id="display:none;">
+        <h1>Blacksmith</h1>
+        <button onclick="upgradeWeapon()">Upgrade Weapon</button>
+    </div>
+    <div id="characters">
+        <!-- Characters will be displayed here -->
     </div>
     <script src="script.js"></script>
 </body>
