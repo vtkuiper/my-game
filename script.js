@@ -1,4 +1,5 @@
 let gold = 50;
+let food = 20;
 
 document.getElementById('hire-button').addEventListener('click', function() {
     if (gold >= 10) {
@@ -21,6 +22,8 @@ document.getElementById('hire-button').addEventListener('click', function() {
 function createCharacterProfile() {
     const profile = document.createElement('div');
     profile.classList.add('character-profile');
+    profile.draggable = true;
+    profile.addEventListener('dragstart', dragStart);
 
     const img = document.createElement('img');
     img.src = 'profile.jpg'; // Voeg hier de juiste afbeelding toe
@@ -61,3 +64,42 @@ function getRandomGender() {
     const genders = ['Male', 'Female'];
     return genders[Math.floor(Math.random() * genders.length)];
 }
+
+function dragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.id);
+}
+
+const boxes = document.querySelectorAll('.sub-box');
+boxes.forEach(box => {
+    box.addEventListener('dragover', dragOver);
+    box.addEventListener('drop', drop);
+});
+
+function dragOver(event) {
+    event.preventDefault();
+}
+
+function drop(event) {
+    event.preventDefault();
+    const id = event.dataTransfer.getData('text/plain');
+    const draggableElement = document.getElementById(id);
+    event.target.appendChild(draggableElement);
+}
+
+function healCharacters() {
+    const restBox = document.getElementById('rest-box');
+    const characters = restBox.querySelectorAll('.character-profile');
+    characters.forEach(character => {
+        if (food > 0) {
+            const details = character.querySelector('.details');
+            const hp = parseInt(details.innerHTML.match(/Max HP: (\d+)/)[1]);
+            if (hp < 10) {
+                details.innerHTML = details.innerHTML.replace(/Max HP: \d+/, `Max HP: ${hp + 1}`);
+                food -= 1;
+                document.getElementById('food-counter').textContent = `Food: ${food}`;
+            }
+        }
+    });
+}
+
+setInterval(healCharacters, 1000);
