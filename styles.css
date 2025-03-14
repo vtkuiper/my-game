@@ -1,5 +1,7 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #2e004f; /* Donker paars */
+    color: #f0f0f0; /* Wit, niet oog brandend */
 }
 
 .top-bar {
@@ -9,25 +11,17 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #ffcccc; /* Lichtroze */
+    background-color: #4b0082; /* Paars */
     border-radius: 10px;
 }
 
-.left-text {
-    color: #ff0000; /* Rood */
+.left-text, .right-text {
+    color: #f0f0f0; /* Wit, niet oog brandend */
 }
 
 .center-image {
     width: 100px;
     height: auto;
-}
-
-.right-text:nth-child(3) {
-    color: #00ff00; /* Groen */
-}
-
-.right-text:nth-child(4) {
-    color: #0000ff; /* Blauw */
 }
 
 .main-content {
@@ -38,7 +32,7 @@ body {
 
 .box {
     width: 30%;
-    background-color: #ffffcc; /* Lichtgeel */
+    background-color: #6a0dad; /* Paars */
     padding: 10px;
     border-radius: 10px;
 }
@@ -50,11 +44,12 @@ body {
 }
 
 .sub-box {
-    background-color: #ffcc00; /* Geel */
+    background-color: #8a2be2; /* Paars */
     margin: 5px 0;
     padding: 20px; /* Langer maken */
     color: #000;
     border-radius: 10px;
+    height: 50px; /* Halve lengte van de breedte */
 }
 
 .bottom-bar {
@@ -64,7 +59,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #ccffcc; /* Lichtgroen */
+    background-color: #4b0082; /* Paars */
     border-radius: 10px;
 }
 
@@ -96,7 +91,7 @@ body {
     border: 1px solid #000;
     border-radius: 10px;
     padding: 5px;
-    background-color: #ffccff; /* Lichtroze */
+    background-color: #556b2f; /* Donker groen, moeras kleur */
 }
 
 .character-profile img {
