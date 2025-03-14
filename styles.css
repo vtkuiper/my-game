@@ -56,7 +56,7 @@ body {
     padding: 20px; /* Langer maken */
     color: #f0f0f0; /* Wit */
     border-radius: 10px;
-    height: 100px; /* Dubbel zo lang */
+    height: 80px; /* Korter maken */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,7 +65,7 @@ body {
 
 #encounters-1, #encounters-2, #encounters-3 {
     border: 1px solid #000; /* Normale rand */
-    height: 100px; /* Dubbel zo lang */
+    height: 80px; /* Korter maken */
 }
 
 .bottom-bar {
