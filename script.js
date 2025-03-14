@@ -1,94 +1,96 @@
-class Character {
-    constructor(name, image) {
-        this.name = name;
-        this.image = image;
-        this.hp = 10;
-        this.maxHp = 10;
-        this.damage = 2;
-        this.rank = 'Bronze';
-        this.kills = 0;
-        this.food = 0;
-        this.gold = 0;
-    }
+// Game data en variabelen
+let characters = [];
+let foodAmount = 10;
+let enemies = [];
 
-    heal() {
-        if (this.hp < this.maxHp && this.food > 0) {
-            this.hp += 1;
-            this.food -= 1;
-        }
-    }
-
-    gatherFood() {
-        setInterval(() => {
-            this.food += 1;
-        }, 3000);
-    }
-
-    fight(enemy) {
-        enemy.hp -= this.damage;
-        if (enemy.hp <= 0) {
-            this.kills += 1;
-            this.gold += 1;
-            this.updateRank();
-        }
-    }
-
-    updateRank() {
-        if (this.kills >= 30) {
-            this.rank = 'Platinum';
-            this.maxHp = 25;
-            this.damage = 5;
-        } else if (this.kills >= 20) {
-            this.rank = 'Gold';
-            this.maxHp = 20;
-            this.damage = 4;
-        } else if (this.kills >= 10) {
-            this.rank = 'Silver';
-            this.maxHp = 15;
-            this.damage = 3;
-        }
-    }
+// Karakter constructor
+function Character(name) {
+    this.name = name;
+    this.hp = 10;
+    this.maxHp = 10;
+    this.damage = 2;
+    this.food = 10;
+    this.kills = 0;
+    this.rank = "Bronze";
+    this.image = `https://picsum.photos/50/50?random=${Math.floor(Math.random() * 1000)}`;  // Random image
 }
 
-class Enemy {
-    constructor() {
-        this.hp = 5;
-        this.damage = 2;
-    }
+// Functie om random naam te genereren
+function generateRandomName() {
+    const names = ['Axel', 'Lena', 'Finn', 'Sophie', 'Kai', 'Emma'];
+    return names[Math.floor(Math.random() * names.length)];
 }
 
-// Example of creating a character
-const characters = [];
-const names = ["Alice", "Bob", "Charlie", "Dave"];
-const images = ["path/to/image1.png", "path/to/image2.png", "path/to/image3.png", "path/to/image4.png"];
-
-names.forEach((name, index) => {
-    const character = new Character(name, images[index]);
+// Karakter aanmaken
+function createCharacter() {
+    const name = generateRandomName();
+    const character = new Character(name);
     characters.push(character);
-    const charElement = document.createElement('div');
-    charElement.className = 'character';
-    charElement.innerText = name;
-    document.getElementById('characters').appendChild(charElement);
+    updateRestingInfo();
+}
+
+// Update de rustsectie
+function updateRestingInfo() {
+    const character = characters[0]; // We nemen de eerste karakter voor nu
+    document.getElementById('resting-hp').textContent = character.hp;
+    document.getElementById('resting-food').textContent = character.food;
+}
+
+// Knop om te rusten (HP herstellen)
+document.getElementById('rest-button').addEventListener('click', () => {
+    const character = characters[0];
+    if (character.food > 0 && character.hp < character.maxHp) {
+        character.hp++;
+        character.food--;
+        updateRestingInfo();
+    }
 });
 
-// Add drag-and-drop functionality
-const sections = document.querySelectorAll('.section');
-const charElements = document.querySelectorAll('.character');
+// Voedsel verzamelen
+function startFoodGathering() {
+    const progressBar = document.getElementById('food-progress');
+    let progress = 0;
+    const interval = setInterval(() => {
+        if (progress < 100) {
+            progress += 10;
+            progressBar.style.width = `${progress}%`;
+        } else {
+            clearInterval(interval);
+            foodAmount++;
+            document.getElementById('food-status').textContent = `Collected 1 food. Total: ${foodAmount}`;
+            progress = 0;
+            progressBar.style.width = '0%';
+        }
+    }, 3000);
+}
 
-charElements.forEach(charElement => {
-    charElement.addEventListener('dragstart', () => {
-        charElement.classList.add('dragging');
-    });
+startFoodGathering();
 
-    charElement.addEventListener('dragend', () => {
-        charElement.classList.remove('dragging');
-    });
-});
+// Enemies genereren
+function generateEnemy() {
+    const enemy = {
+        hp: 5,
+        damage: 2,
+        kills: 0
+    };
+    enemies.push(enemy);
+    displayEnemies();
+}
 
-sections.forEach(section => {
-    section.addEventListener('dragover', e => {
-        e.preventDefault();
-        const dragging = document.querySelector('.dragging');
-        section.appendChild(dragging);
+// Display enemies
+function displayEnemies() {
+    const enemyContainer = document.getElementById('enemy-info');
+    enemyContainer.innerHTML = '';
+    enemies.forEach((enemy, index) => {
+        const enemyElement = document.createElement('div');
+        enemyElement.classList.add('enemy');
+        enemyElement.innerHTML = `
+            <p>Enemy ${index + 1}</p>
+            <p>HP: ${enemy.hp}</p>
+            <p>Damage: ${enemy.damage}</p>
+        `;
+        enemyContainer.appendChild(enemyElement);
     });
-});
+}
+
+generateEnemy();  // Maak een vijand aan voor de test
