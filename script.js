@@ -13,9 +13,10 @@ function Character(name) {
     this.damage = 2;
     this.kills = 0;
     this.rank = "Bronze";
-    this.image = `https://picsum.photos/50/50?random=${Math.floor(Math.random() * 1000)}`;  // Random image
+    this.image = `https://picsum.photos/80/80?random=${Math.floor(Math.random() * 1000)}`;  // Random image
     this.foodGatheringProgress = 0;  // Laadbalk voor voedselverzameling
     this.isResting = false; // Controleert of het karakter rust
+    this.foodBar = null;  // Houdt de foodbalk bij
 }
 
 // Genereer een random naam voor karakters
@@ -103,32 +104,43 @@ function drop(event) {
     if (sectionId === "resting") {
         startResting(character);
     }
+
+    // Als het karakter niet meer in food gathering staat, stop de foodbar
+    if (sectionId !== "food" && character.foodBar) {
+        clearInterval(character.foodBar.interval);  // Stop de voedselverzameling
+        character.foodBar = null;  // Verwijder de foodbalk
+    }
 }
 
 // Start het voedsel verzamelen voor een karakter
 function startFoodGathering(character) {
-    const foodBar = document.createElement('div');
-    foodBar.classList.add('food-bar');
-    const foodFill = document.createElement('div');
-    foodFill.classList.add('food-bar-fill');
-    foodBar.appendChild(foodFill);
+    // Maak een nieuwe foodbalk als die er nog niet is
+    if (!character.foodBar) {
+        const foodBar = document.createElement('div');
+        foodBar.classList.add('food-bar');
+        const foodFill = document.createElement('div');
+        foodFill.classList.add('food-bar-fill');
+        foodBar.appendChild(foodFill);
 
-    // Voeg de voedselbalk toe aan het karakter in de food sectie
-    const section = document.getElementById('food');
-    section.appendChild(foodBar);
+        // Voeg de voedselbalk toe aan het karakter in de food sectie
+        const section = document.getElementById('food');
+        section.appendChild(foodBar);
 
-    // Voedsel verzamelen proces
-    let progress = 0;
-    const interval = setInterval(() => {
-        if (progress < 100) {
-            progress += 1;
-            foodFill.style.width = progress + '%';
-        } else {
-            clearInterval(interval);
-            food += 1;  // Voeg 1 food toe
-            updateResourceCounters();
-        }
-    }, 100);  // Elke 100ms voegt de balk 1% toe
+        character.foodBar = { fill: foodFill, progress: 0 };
+
+        // Start de voedselverzameling
+        const interval = setInterval(() => {
+            if (character.foodBar.progress < 100) {
+                character.foodBar.progress += 1;
+                character.foodBar.fill.style.width = character.foodBar.progress + '%';
+            } else {
+                clearInterval(interval);
+                food += 1;  // Voeg 1 food toe
+                updateResourceCounters();
+                startFoodGathering(character);  // Begin opnieuw met verzamelen
+            }
+        }, 100);  // Elke 100ms voegt de balk 1% toe
+    }
 }
 
 // Start het rusten van een karakter en herstel HP met food
