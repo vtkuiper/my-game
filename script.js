@@ -4,7 +4,7 @@ let food = 20;
 document.getElementById('hire-button').addEventListener('click', function() {
     if (gold >= 10) {
         const slots = document.querySelectorAll('.character-slot');
-        const emptySlot = Array.from(slots).find(slot => slot.innerHTML === '');
+        const emptySlot = Array.from(slots).find(slot => slot.innerHTML.trim() === '');
 
         if (emptySlot) {
             const character = createCharacterProfile();
