@@ -2,6 +2,8 @@
 let characters = [];
 let foodAmount = 10;
 let enemies = [];
+let maxCharacters = 10;
+let maxCharactersPerVak = 5;
 
 // Karakter constructor
 function Character(name) {
@@ -23,17 +25,35 @@ function generateRandomName() {
 
 // Karakter aanmaken
 function createCharacter() {
+    if (characters.length >= maxCharacters) {
+        alert("Maximaal 10 karakters zijn toegestaan.");
+        return;
+    }
+
     const name = generateRandomName();
     const character = new Character(name);
     characters.push(character);
-    updateRestingInfo();
+    updateCharacterDisplay();
 }
 
-// Update de rustsectie
-function updateRestingInfo() {
-    const character = characters[0]; // We nemen de eerste karakter voor nu
-    document.getElementById('resting-hp').textContent = character.hp;
-    document.getElementById('resting-food').textContent = character.food;
+// Update weergave van karakters in de secties
+function updateCharacterDisplay() {
+    updateVak('resting', characters.slice(0, maxCharactersPerVak));
+    updateVak('food', characters.slice(maxCharactersPerVak, maxCharactersPerVak * 2));
+    updateVak('enemies', characters.slice(maxCharactersPerVak * 2, maxCharactersPerVak * 3));
+}
+
+// Update karakters in een vak
+function updateVak(vakId, vakCharacters) {
+    const vak = document.getElementById(`${vakId}-characters`);
+    vak.innerHTML = ''; // Maak de vakken leeg voor de update
+
+    vakCharacters.forEach(character => {
+        const charDiv = document.createElement('div');
+        charDiv.classList.add('character');
+        charDiv.innerHTML = `<img src="${character.image}" alt="${character.name}" />`;
+        vak.appendChild(charDiv);
+    });
 }
 
 // Knop om te rusten (HP herstellen)
