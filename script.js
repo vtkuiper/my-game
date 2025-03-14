@@ -91,7 +91,9 @@ function drop(event) {
     event.preventDefault();
     const id = event.dataTransfer.getData('text/plain');
     const draggableElement = document.getElementById(id);
-    event.target.appendChild(draggableElement);
+    if (event.target.classList.contains('sub-box') && event.target.childElementCount < 2) {
+        event.target.appendChild(draggableElement);
+    }
 }
 
 function healCharacters() {
