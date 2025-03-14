@@ -3,13 +3,14 @@ body {
 }
 
 .top-bar {
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     background-color: #ffcccc; /* Lichtroze */
+    border-radius: 10px;
 }
 
 .left-text {
@@ -39,41 +40,32 @@ body {
     width: 30%;
     background-color: #ffffcc; /* Lichtgeel */
     padding: 10px;
+    border-radius: 10px;
 }
 
-.sub-box:nth-child(1) {
+.box-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sub-box {
     background-color: #ffcc00; /* Geel */
+    margin: 5px 0;
+    padding: 10px;
     color: #000;
-}
-
-.sub-box:nth-child(2) {
-    background-color: #ccffcc; /* Lichtgroen */
-    color: #000;
-}
-
-.sub-box:nth-child(3) {
-    background-color: #ccccff; /* Lichtblauw */
-    color: #000;
-}
-
-.sub-box:nth-child(4) {
-    background-color: #ffccff; /* Lichtroze */
-    color: #000;
-}
-
-.sub-box:nth-child(5) {
-    background-color: #ccffff; /* Lichtcyaan */
-    color: #000;
+    border-radius: 10px;
 }
 
 .bottom-bar {
-    width: 90%;
-    margin: 0 auto;
+    width: 95%;
+    margin: 0 auto 20px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     background-color: #ccffcc; /* Lichtgroen */
+    border-radius: 10px;
 }
 
 #hire-button {
@@ -82,11 +74,12 @@ body {
     padding: 10px;
     border: none;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .character-slot {
     width: 18%;
-    height: 100px;
+    height: 120px;
     background-color: #99ff99; /* Lichtgroen */
     margin: 5px;
     display: flex;
@@ -94,11 +87,15 @@ body {
     justify-content: center;
     color: #000;
     border: 1px solid #000;
+    border-radius: 10px;
 }
 
 .character-profile {
     display: flex;
     align-items: center;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 .character-profile img {
