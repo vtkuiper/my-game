@@ -1,52 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Management</title>
+    <title>Game Management</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <h1>Character Management</h1>
-
-    <!-- Goud -->
-    <p id="gold">Gold: 50</p>
-
-    <!-- Hire Volunteer Button -->
-    <button class="button" id="hireVolunteerBtn">Hire Volunteer (10 Gold)</button>
-
-    <!-- Resting, Food Gathering, Fighting, Enemy Sections -->
-    <div id="resting" class="section">
-        <div class="spot" id="resting-1"></div>
-        <div class="spot" id="resting-2"></div>
-        <div class="spot" id="resting-3"></div>
-        <div class="spot" id="resting-4"></div>
-        <div class="spot" id="resting-5"></div>
+    <div id="resource-bar">
+        <div id="gold-counter">Gold: 0</div>
+        <div id="food-counter">Food: 0</div>
+    </div>
+    
+    <div id="available-characters" class="game-section">
+        <h3>Available Characters</h3>
+        <div id="character-list"></div>
     </div>
 
-    <div id="foodGathering" class="section">
-        <div class="spot" id="foodGathering-1"></div>
-        <div class="spot" id="foodGathering-2"></div>
-        <div class="spot" id="foodGathering-3"></div>
-        <div class="spot" id="foodGathering-4"></div>
-        <div class="spot" id="foodGathering-5"></div>
+    <div id="resting" class="game-section">
+        <h3>Resting</h3>
     </div>
 
-    <div id="fighting" class="section">
-        <div class="spot" id="fighting-1"></div>
-        <div class="spot" id="fighting-2"></div>
-        <div class="spot" id="fighting-3"></div>
-        <div class="spot" id="fighting-4"></div>
-        <div class="spot" id="fighting-5"></div>
+    <div id="food" class="game-section">
+        <h3>Food Gathering</h3>
     </div>
 
-    <div id="enemy" class="section">
-        <div class="spot" id="enemy-1"></div>
-        <div class="spot" id="enemy-2"></div>
-        <div class="spot" id="enemy-3"></div>
-        <div class="spot" id="enemy-4"></div>
-        <div class="spot" id="enemy-5"></div>
+    <div id="fighting" class="game-section">
+        <h3>Fighting</h3>
+    </div>
+
+    <div id="enemy" class="game-section">
+        <h3>Enemy</h3>
     </div>
 
     <script src="script.js"></script>
