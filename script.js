@@ -13,6 +13,14 @@ function Character(name) {
     this.section = null; // Houdt bij waar het karakter zich bevindt (resting, food, fighting)
 }
 
+// Enemy constructor
+function Enemy(name) {
+    this.name = name;
+    this.hp = 5;
+    this.damage = 2;
+    this.image = `https://picsum.photos/60/60?random=${Math.floor(Math.random() * 1000)}`;  // Random image
+}
+
 // Genereer een random naam voor karakters
 function generateRandomName() {
     const names = ['Axel', 'Lena', 'Finn', 'Sophie', 'Kai', 'Emma'];
