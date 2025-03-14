@@ -10,7 +10,7 @@ function Character(name) {
     this.foodGatheringProgress = 0;  // Laadbalk voor voedselverzameling
     this.isResting = false; // Controleert of het karakter rust
     this.foodBar = null;  // Houdt de foodbalk bij
-    this.section = null; // Houdt bij waar de karakter zich bevindt (resting, food, fighting)
+    this.section = null; // Houdt bij waar het karakter zich bevindt (resting, food, fighting)
 }
 
 // Enemy constructor
@@ -119,7 +119,7 @@ function startFight(characterIndex, enemyIndex) {
     }, 1000); // Elke seconde een aanval
 }
 
-// Functies voor drag-and-drop 
+// Functies voor drag-and-drop
 function allowDrop(event) {
     event.preventDefault();
 }
