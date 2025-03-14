@@ -36,7 +36,7 @@ function createCharacterProfile() {
 
     const name = document.createElement('div');
     name.classList.add('name');
-    name.textContent = getRandomName();
+    name.textContent = getRandomName(profile.id);
     info.appendChild(name);
 
     const gender = document.createElement('div');
@@ -56,8 +56,11 @@ function createCharacterProfile() {
     return profile;
 }
 
-function getRandomName() {
-    const names = ['Aragorn', 'Legolas', 'Gimli', 'Frodo', 'Samwise'];
+function getRandomName(id) {
+    const maleNames = ['Aragorn', 'Legolas', 'Gimli', 'Frodo', 'Samwise'];
+    const femaleNames = ['Arwen', 'Eowyn', 'Galadriel', 'Rosie', 'Luthien'];
+    const gender = document.getElementById(id).querySelector('.character-info div:nth-child(2)').textContent;
+    const names = gender === 'Male' ? maleNames : femaleNames;
     return names[Math.floor(Math.random() * names.length)];
 }
 
@@ -93,7 +96,96 @@ function drop(event) {
     const draggableElement = document.getElementById(id);
     if (event.target.classList.contains('sub-box') && event.target.childElementCount < 2 && (event.target.id.startsWith('rest') || event.target.id.startsWith('adventure'))) {
         event.target.appendChild(draggableElement);
+        if (event.target.id.startsWith('adventure')) {
+            spawnEnemy(event.target.id);
+        }
     }
+}
+
+function spawnEnemy(adventureId) {
+    const encounterId = adventureId.replace('adventure', 'encounters');
+    const encounterBox = document.getElementById(encounterId);
+    if (encounterBox.childElementCount === 0) {
+        const enemy = createEnemyProfile();
+        encounterBox.appendChild(enemy);
+        startBattle(adventureId, encounterId);
+    }
+}
+
+function createEnemyProfile() {
+    const profile = document.createElement('div');
+    profile.classList.add('character-profile');
+    profile.draggable = false;
+
+    const img = document.createElement('img');
+    img.src = 'goblin.jpg'; // Voeg hier de juiste afbeelding toe
+    profile.appendChild(img);
+
+    const info = document.createElement('div');
+    info.classList.add('character-info');
+
+    const name = document.createElement('div');
+    name.classList.add('name');
+    name.textContent = 'Goblin';
+    info.appendChild(name);
+
+    const gender = document.createElement('div');
+    gender.textContent = 'Male';
+    info.appendChild(gender);
+
+    const details = document.createElement('div');
+    details.innerHTML = `
+        Max HP: 5<br>
+        Damage: 2
+    `;
+    info.appendChild(details);
+
+    profile.appendChild(info);
+
+    return profile;
+}
+
+function startBattle(adventureId, encounterId) {
+    const adventureBox = document.getElementById(adventureId);
+    const encounterBox = document.getElementById(encounterId);
+
+    const adventureCharacters = adventureBox.querySelectorAll('.character-profile');
+    const encounterCharacters = encounterBox.querySelectorAll('.character-profile');
+
+    const battleInterval = setInterval(() => {
+        if (adventureCharacters.length > 0 && encounterCharacters.length > 0) {
+            const adventureCharacter = adventureCharacters[0];
+            const encounterCharacter = encounterCharacters[0];
+
+            const adventureDetails = adventureCharacter.querySelector('.details');
+            const encounterDetails = encounterCharacter.querySelector('.details');
+
+            const adventureHp = parseInt(adventureDetails.innerHTML.match(/Max HP: (\d+)/)[1]);
+            const encounterHp = parseInt(encounterDetails.innerHTML.match(/Max HP: (\d+)/)[1]);
+
+            const adventureDamage = parseInt(adventureDetails.innerHTML.match(/Damage: (\d+)/)[1]);
+            const encounterDamage = parseInt(encounterDetails.innerHTML.match(/Damage: (\d+)/)[1]);
+
+            if (adventureHp > 0 && encounterHp > 0) {
+                adventureDetails.innerHTML = adventureDetails.innerHTML.replace(/Max HP: \d+/, `Max HP: ${adventureHp - encounterDamage}`);
+                encounterDetails.innerHTML = encounterDetails.innerHTML.replace(/Max HP: \d+/, `Max HP: ${encounterHp - adventureDamage}`);
+            }
+
+            if (encounterHp - adventureDamage <= 0) {
+                encounterBox.removeChild(encounterCharacter);
+                gold += 5;
+                document.getElementById('gold-counter').textContent = `Gold: ${gold}`;
+                clearInterval(battleInterval);
+            }
+
+            if (adventureHp - encounterDamage <= 0) {
+                adventureBox.removeChild(adventureCharacter);
+                clearInterval(battleInterval);
+            }
+        } else {
+            clearInterval(battleInterval);
+        }
+    }, 1000);
 }
 
 function healCharacters() {
