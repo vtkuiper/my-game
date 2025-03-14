@@ -13,6 +13,14 @@ function Character(name) {
     this.section = null; // Houdt bij waar de karakter zich bevindt (resting, food, fighting)
 }
 
+// Enemy constructor
+function Enemy(name) {
+    this.name = name;
+    this.hp = 5;
+    this.damage = 2;
+    this.image = `https://picsum.photos/60/60?random=${Math.floor(Math.random() * 1000)}`;  // Random image
+}
+
 // Genereer een random naam voor karakters
 function generateRandomName() {
     const names = ['Axel', 'Lena', 'Finn', 'Sophie', 'Kai', 'Emma'];
@@ -21,15 +29,18 @@ function generateRandomName() {
 
 // Maak een nieuw karakter
 function createCharacter() {
-    if (characters.length >= maxCharacters) {
-        alert("Je kunt maximaal 10 karakters hebben.");
-        return;
-    }
-
     const name = generateRandomName();
     const character = new Character(name);
     characters.push(character);
     updateCharacterList();
+}
+
+// Maak een nieuwe vijand aan
+function createEnemy() {
+    const name = 'Enemy ' + Math.floor(Math.random() * 1000);
+    const enemy = new Enemy(name);
+    enemies.push(enemy);
+    updateEnemyList();
 }
 
 // Werk de lijst van beschikbare karakters bij
@@ -44,16 +55,6 @@ function updateCharacterList() {
         charDiv.setAttribute('id', 'character-' + index);
         charDiv.setAttribute('ondragstart', 'drag(event)');
 
-        // Laadbalk in het profiel van het karakter
-        let foodBarHTML = '';
-        if (character.foodBar) {
-            foodBarHTML = `
-                <div class="food-bar">
-                    <div class="food-bar-fill" style="width: ${character.foodBar.progress}%"></div>
-                </div>
-            `;
-        }
-
         charDiv.innerHTML = `
             <img src="${character.image}" alt="${character.name}" />
             <div class="character-info">
@@ -61,14 +62,64 @@ function updateCharacterList() {
                 <p>HP: ${character.hp}/${character.maxHp}</p>
                 <p>Damage: ${character.damage}</p>
                 <p>Rank: ${character.rank}</p>
-                ${foodBarHTML}
             </div>
         `;
         charListContainer.appendChild(charDiv);
     });
 }
 
-// Laat het karakter slepen
+// Werk de lijst van vijanden bij
+function updateEnemyList() {
+    const enemyListContainer = document.getElementById('enemy-characters');
+    enemyListContainer.innerHTML = ''; // Verwijder de huidige lijst
+
+    enemies.forEach((enemy, index) => {
+        const enemyDiv = document.createElement('div');
+        enemyDiv.classList.add('enemy');
+        enemyDiv.setAttribute('id', 'enemy-' + index);
+
+        enemyDiv.innerHTML = `
+            <img src="${enemy.image}" alt="${enemy.name}" />
+            <div class="enemy-info">
+                <p><strong>${enemy.name}</strong></p>
+                <p>HP: ${enemy.hp}</p>
+                <p>Damage: ${enemy.damage}</p>
+            </div>
+        `;
+        enemyListContainer.appendChild(enemyDiv);
+    });
+}
+
+// Start de gevechten tussen karakters en vijanden
+function startFight(characterIndex, enemyIndex) {
+    const character = characters[characterIndex];
+    const enemy = enemies[enemyIndex];
+
+    // Simuleer een gevecht
+    const fightInterval = setInterval(() => {
+        // Karakter doet schade aan vijand
+        enemy.hp -= character.damage;
+        if (enemy.hp <= 0) {
+            alert(`${character.name} heeft ${enemy.name} verslagen!`);
+            character.kills++;
+            enemies.splice(enemyIndex, 1); // Verwijder de vijand
+            updateEnemyList();
+            clearInterval(fightInterval);
+        }
+
+        // Vijand doet schade aan karakter
+        character.hp -= enemy.damage;
+        if (character.hp <= 0) {
+            alert(`${enemy.name} heeft ${character.name} verslagen!`);
+            characters.splice(characterIndex, 1); // Verwijder het karakter
+            updateCharacterList();
+            clearInterval(fightInterval);
+        }
+
+    }, 1000); // Elke seconde een aanval
+}
+
+// Functies voor drag-and-drop 
 function allowDrop(event) {
     event.preventDefault();
 }
@@ -79,80 +130,26 @@ function drag(event) {
 
 function drop(event) {
     event.preventDefault();
-    const characterId = event.dataTransfer.getData("text");
-    const character = characters[parseInt(characterId.split('-')[1])];
-    const sectionId = event.target.id;
+    const data = event.dataTransfer.getData("text");
+    const draggedElement = document.getElementById(data);
 
-    // Zorg ervoor dat de sectie niet vol is
-    const section = document.getElementById(sectionId);
-    if (section.children.length >= maxCharactersPerSection) {
-        alert("Deze sectie is vol!");
-        return;
-    }
+    if (event.target.classList.contains('section')) {
+        // Verplaats het karakter naar de sectie
+        event.target.appendChild(draggedElement);
 
-    // Verplaats het karakter naar de sectie
-    const charDiv = document.getElementById(characterId);
-    section.appendChild(charDiv);
-
-    // Als het karakter in de food gathering sectie staat, start de voedselbalk
-    if (sectionId === "food") {
-        startFoodGathering(character, section);
-    }
-
-    // Als het karakter in de resting sectie staat, herstel HP met food
-    if (sectionId === "resting") {
-        startResting(character);
-    }
-
-    // Als het karakter niet meer in food gathering staat, stop de foodbar
-    if (sectionId !== "food" && character.foodBar) {
-        clearInterval(character.foodBar.interval);  // Stop de voedselverzameling
-        character.foodBar.fill.style.width = '0%';  // Zet de progress terug naar 0%
-        character.foodBar = null;  // Verwijder de foodbalk
-    }
-
-    // Update de sectie van het karakter
-    character.section = sectionId;
-}
-
-// Start het voedsel verzamelen voor een karakter
-function startFoodGathering(character, section) {
-    // Maak een nieuwe foodbalk als die er nog niet is
-    if (!character.foodBar) {
-        const foodBar = document.createElement('div');
-        foodBar.classList.add('food-bar');
-        const foodFill = document.createElement('div');
-        foodFill.classList.add('food-bar-fill');
-        foodBar.appendChild(foodFill);
-
-        // Voeg de voedselbalk toe aan het karakterprofiel
-        character.foodBar = { fill: foodFill, progress: 0 };
-
-        // Start de voedselverzameling
-        const interval = setInterval(() => {
-            if (character.foodBar.progress < 100) {
-                character.foodBar.progress += 1;
-                character.foodBar.fill.style.width = character.foodBar.progress + '%';
-            } else {
-                clearInterval(interval);
-                food += 1;  // Voeg 1 food toe
-                updateResourceCounters();
-                startFoodGathering(character, section);  // Begin opnieuw met verzamelen als het karakter nog in de sectie is
-            }
-        }, 100);  // Elke 100ms voegt de balk 1% toe
+        // Als het naar de Fighting sectie gaat, start gevecht
+        if (event.target.id === 'fighting') {
+            const characterIndex = characters.findIndex(char => 'character-' + characters.indexOf(char) === draggedElement.id);
+            const enemyIndex = Math.floor(Math.random() * enemies.length);  // Kies een vijand om tegen te vechten
+            startFight(characterIndex, enemyIndex);
+        }
     }
 }
 
-// Start het rusten van een karakter en herstel HP met food
-function startResting(character) {
-    if (food > 0 && character.hp < character.maxHp) {
-        character.hp += 1;  // Herstel 1 HP
-        food -= 1;  // Verbruik 1 food
-        updateResourceCounters();
-    }
-}
+// Start de game door een karakter en een vijand te maken
+const characters = [];
+const enemies = [];
 
-// Maak karakters aan en werk de lijst bij
+// Voeg een karakter en vijand toe voor testen
 createCharacter();
-createCharacter();
-createCharacter(); // Maak meer karakters aan naar wens
+createEnemy();
