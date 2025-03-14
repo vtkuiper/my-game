@@ -1,51 +1,36 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
+    <title>Character Management Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="game-container">
         <!-- Left section: Resting -->
-        <div class="section" id="resting">
+        <div class="section" id="resting" ondrop="drop(event)" ondragover="allowDrop(event)">
             <h2>Resting</h2>
-            <div id="resting-info">
-                <p>HP: <span id="resting-hp">10</span></p>
-                <p>Food: <span id="resting-food">10</span></p>
-                <button id="rest-button">Rest</button>
-                <div id="resting-characters">
-                    <!-- Karakters in het rusten vak -->
-                </div>
-            </div>
+            <div id="resting-characters"></div>
         </div>
 
-        <!-- Middle section: Food gathering -->
-        <div class="section" id="food">
+        <!-- Middle section: Food Gathering -->
+        <div class="section" id="food" ondrop="drop(event)" ondragover="allowDrop(event)">
             <h2>Food Gathering</h2>
-            <div id="food-info">
-                <p>Food per 3 seconds</p>
-                <div id="food-bar">
-                    <div id="food-progress"></div>
-                </div>
-                <p id="food-status">Ready to gather</p>
-                <div id="food-characters">
-                    <!-- Karakters in het voedsel verzamelen vak -->
-                </div>
-            </div>
+            <div id="food-characters"></div>
         </div>
 
-        <!-- Right section: Enemies -->
-        <div class="section" id="enemies">
-            <h2>Enemies</h2>
-            <div id="enemy-info">
-                <!-- Enemies will appear here -->
-            </div>
-            <div id="enemy-characters">
-                <!-- Karakters in het vechten vak -->
-            </div>
+        <!-- Right section: Fighting -->
+        <div class="section" id="enemies" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>Fighting</h2>
+            <div id="enemy-info"></div>
+            <div id="enemy-characters"></div>
         </div>
+    </div>
+
+    <div id="character-container">
+        <h2>Available Characters</h2>
+        <div id="character-list"></div>
     </div>
 
     <script src="script.js"></script>
