@@ -49,7 +49,7 @@ body {
     background-color: #8a2be2; /* Paars */
     margin: 5px 0;
     padding: 20px; /* Langer maken */
-    color: #000;
+    color: #f0f0f0; /* Wit */
     border-radius: 10px;
     height: 50px; /* Halve lengte van de breedte */
     display: flex;
