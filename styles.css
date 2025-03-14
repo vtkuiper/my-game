@@ -16,6 +16,10 @@ body {
     border-radius: 10px;
 }
 
+.left-text, .right-text, .box-title, #hire-button {
+    font-weight: bold; /* Bold tekst */
+}
+
 .left-text, .right-text {
     color: #f0f0f0; /* Wit, niet oog brandend */
 }
@@ -51,7 +55,7 @@ body {
     padding: 20px; /* Langer maken */
     color: #f0f0f0; /* Wit */
     border-radius: 10px;
-    height: 50px; /* Halve lengte van de breedte */
+    height: 100px; /* Dubbel zo lang */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,7 +64,7 @@ body {
 
 #encounters-1, #encounters-2, #encounters-3 {
     border: 1px solid #000; /* Normale rand */
-    height: 70px; /* Langer maken */
+    height: 100px; /* Dubbel zo lang */
 }
 
 .bottom-bar {
@@ -81,6 +85,7 @@ body {
     border: none;
     cursor: pointer;
     border-radius: 10px;
+    font-weight: bold; /* Bold tekst */
 }
 
 .character-slot {
