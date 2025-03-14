@@ -1,84 +1,135 @@
+/* Algemene stijlen */
 body {
-    background-color: #2e1c47; /* Donkerpaarse achtergrond */
-    font-family: Arial, sans-serif;
-    color: white;
-    margin: 0;
-    padding: 0;
-}
-
-.game-section {
+    font-family: 'Arial', sans-serif;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    padding: 15px;
-    margin: 15px;
-    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #2c2c2c; /* Donkergrijze achtergrond */
+    height: 100vh;
+    overflow: hidden; /* Geen scrollen meer */
 }
 
-h3 {
+.resource-counters {
+    display: flex;
+    justify-content: space-around;
     width: 100%;
-    text-align: center;
-    color: #f0f0f0;
+    padding: 10px 0;
+    background-color: #3e3e3e;
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 20px;
 }
 
-#gold-counter, #food-counter {
-    font-size: 1.2rem;
+.game-container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    height: 65%;
+}
+
+/* Secties voor de verschillende vakken */
+.section {
+    width: 32%;
     margin: 10px;
-    color: #f0f0f0;
-}
-
-#available-characters {
-    margin-top: 30px;
-}
-
-.character {
-    background-color: #4f703a; /* Donker groen voor karakters */
+    background-color: #3e3e3e; /* Donkergrijs voor secties */
+    padding: 20px;
     border-radius: 10px;
-    margin: 10px;
-    padding: 10px;
-    width: 120px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    min-height: 400px; /* Grotere secties */
+    border: 2px dashed #ddd;
+    overflow-y: auto;
+}
+
+/* Kopjes in de secties */
+.section h2 {
     text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Het karakterprofiel kleiner maken */
+.character {
+    display: flex;
+    align-items: center;
+    background-color: #4caf50; /* Groen voor de karakters */
+    color: white;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
+    border: 2px solid #ddd;
+    width: 100%;
 }
 
 .character:hover {
     transform: scale(1.05);
+    background-color: #45a049;
 }
 
+/* Het plaatje van het karakter, kleiner maken */
 .character img {
-    width: 60px;
+    width: 60px; /* Kleinere plaatje */
     height: 60px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    margin-right: 15px;
+    border-radius: 5px; /* Vierkante hoeken */
 }
 
-.food-bar {
-    background-color: #2e1c47;
-    border-radius: 5px;
-    height: 8px;
+/* De stats van het karakter */
+.character-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.character-info p {
+    margin: 2px 0;
+}
+
+/* Het lijstje van beschikbare karakters */
+#character-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+/* Styling voor de secties en character-container */
+#character-container {
     width: 100%;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    background-color: #3e3e3e;
+    border-top: 2px solid #ddd;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+}
+
+#character-container h2 {
+    color: #fff;
+}
+
+/* Donkere achtergrond voor de hele pagina */
+body {
+    background-color: #2c2c2c;
+    color: #fff;
+}
+
+/* Voedselbalk voor food gathering */
+.food-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #333;
+    border-radius: 5px;
     margin-top: 10px;
+    overflow: hidden;
 }
 
 .food-bar-fill {
-    background-color: #4caf50; /* Groene progress voor food gathering */
     height: 100%;
-}
-
-.enemy {
-    background-color: #8B0000; /* Velvet rood voor vijanden */
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-    width: 120px;
-    text-align: center;
-    color: white;
-}
-
-.enemy img {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    background-color: #4caf50;
+    width: 0%;
+    transition: width 0.1s linear;
 }
