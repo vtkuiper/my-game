@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #2e004f; /* Donker paars */
     color: #f0f0f0; /* Wit, niet oog brandend */
+    overflow: hidden; /* Geen scrollen */
 }
 
 .top-bar {
@@ -28,6 +29,7 @@ body {
     display: flex;
     justify-content: space-around;
     margin: 20px 0;
+    height: calc(100vh - 160px); /* Hoogte aanpassen zodat er geen scrollen nodig is */
 }
 
 .box {
