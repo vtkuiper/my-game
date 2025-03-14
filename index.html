@@ -1,45 +1,47 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Management Game</title>
+    <title>Medieval Fantasy Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Tellers voor Gold en Food bovenaan -->
-    <div class="resource-counters">
-        <p>Gold: <span id="gold-count">0</span></p>
-        <p>Food: <span id="food-count">0</span></p>
+    <div class="top-bar">
+        <div class="left-text">Linker tekst</div>
+        <img src="image.jpg" alt="Afbeelding" class="center-image">
+        <div class="right-text">Rechter tekst 1</div>
+        <div class="right-text">Rechter tekst 2</div>
     </div>
-
-    <div class="game-container">
-        <!-- Left section: Resting -->
-        <div class="section" id="resting" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h2>Resting</h2>
-            <div id="resting-characters"></div>
+    
+    <div class="main-content">
+        <div class="box">
+            <div class="sub-box">Vak 1</div>
+            <div class="sub-box">Vak 2</div>
+            <div class="sub-box">Vak 3</div>
+           ="box">
+            <div class="sub-box">Vak 1</div>
+            <div class="sub-box">Vak 2</div>
+            <div class="sub-box">Vak 3</div>
+            <div class="sub-box">Vak 4</div>
+            <div class="sub-box">Vak 5</div>
         </div>
-
-        <!-- Middle section: Food Gathering -->
-        <div class="section" id="food" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h2>Food Gathering</h2>
-            <div id="food-characters"></div>
-        </div>
-
-        <!-- Right section: Fighting -->
-        <div class="section" id="enemies" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h2>Fighting</h2>
-            <div id="enemy-info"></div>
-            <div id="enemy-characters"></div>
+        <div class="box">
+            <div class="sub-box">Vak 1</div>
+            <div class="sub-box">Vak 2</div>
+            <div class="sub-box">Vak 3</div>
+            <div class="sub-box">Vak 4</div>
+            <div class="sub-box">Vak 5</div>
         </div>
     </div>
-
-    <!-- Beschikbare Karakters onderaan -->
-    <div id="character-container">
-        <h2>Available Characters</h2>
-        <div id="character-list"></div>
+    
+    <div class="bottom-bar">
+        <div class="bottom-text">Onderste tekst</div>
+        <div class="bottom-box">Vak 1</div>
+        <div class="bottom-box">Vak 2</div>
+        <div class="bottom-box">Vak 3</div>
+        <div class="bottom-box">Vak 4</div>
+        <div class="bottom-box">Vak 5</div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
