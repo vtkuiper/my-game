@@ -24,6 +24,7 @@ function createCharacterProfile() {
     profile.classList.add('character-profile');
     profile.draggable = true;
     profile.addEventListener('dragstart', dragStart);
+    profile.addEventListener('dragend', dragEnd);
 
     const img = document.createElement('img');
     img.src = 'profile.jpg'; // Voeg hier de juiste afbeelding toe
@@ -42,7 +43,6 @@ function createCharacterProfile() {
     info.appendChild(gender);
 
     const details = document.createElement('div');
-    details.classList.add('details');
     details.innerHTML = `
         Max HP: 10<br>
         Damage: 2<br>
@@ -67,6 +67,13 @@ function getRandomGender() {
 
 function dragStart(event) {
     event.dataTransfer.setData('text/plain', event.target.id);
+    setTimeout(() => {
+        event.target.classList.add('hide');
+    }, 0);
+}
+
+function dragEnd(event) {
+    event.target.classList.remove('hide');
 }
 
 const boxes = document.querySelectorAll('.sub-box');
