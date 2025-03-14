@@ -23,6 +23,7 @@ function createCharacterProfile() {
     const profile = document.createElement('div');
     profile.classList.add('character-profile');
     profile.draggable = true;
+    profile.id = `character-${Date.now()}`;
     profile.addEventListener('dragstart', dragStart);
     profile.addEventListener('dragend', dragEnd);
 
