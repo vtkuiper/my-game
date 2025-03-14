@@ -31,7 +31,7 @@ body {
 
 /* Secties voor de verschillende vakken */
 .section {
-    width: 32%;
+    width: 22%; /* Kleinere secties zodat ze naast elkaar passen */
     margin: 10px;
     background-color: #3e3e3e; /* Donkergrijs voor secties */
     padding: 20px;
@@ -47,6 +47,26 @@ body {
     text-align: center;
     color: #fff;
     margin-bottom: 20px;
+}
+
+/* Styling voor kleine vakken in secties */
+.slot-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    justify-items: center;
+}
+
+.slot {
+    width: 70px;
+    height: 70px;
+    background-color: #4f703a; /* Donker groen voor vakken */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 2px solid #ddd;
 }
 
 /* Het karakterprofiel kleiner maken */
@@ -86,6 +106,11 @@ body {
 
 .character-info p {
     margin: 2px 0;
+}
+
+/* Available Characters text wit maken */
+.available-characters {
+    color: white;
 }
 
 /* Styling voor vijanden */
