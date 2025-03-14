@@ -1,75 +1,94 @@
-const tiles = document.querySelectorAll('.tile');
-let board = Array(16).fill(null);
-
-function drawBoard() {
-    tiles.forEach((tile, index) => {
-        tile.textContent = board[index] ? board[index] : '';
-        tile.style.backgroundColor = board[index] ? '#eee' : '#ccc';
-        tile.setAttribute('data-value', board[index]);
-    });
-}
-
-function addRandomTile() {
-    let emptyTiles = board.map((val, index) => val === null ? index : null).filter(val => val !== null);
-    if (emptyTiles.length > 0) {
-        let randomIndex = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
-        board[randomIndex] = Math.random() < 0.9 ? 2 : 4;
+class Character {
+    constructor(name, image) {
+        this.name = name;
+        this.image = image;
+        this.hp = 10;
+        this.maxHp = 10;
+        this.damage = 2;
+        this.rank = 'Bronze';
+        this.kills = 0;
+        this.food = 0;
+        this.gold = 0;
     }
-}
 
-function moveTiles(direction) {
-    let moved = false;
-    if (direction === 'up' || direction === 'down') {
-        for (let col = 0; col < 4; col++) {
-            let column = [board[col], board[col + 4], board[col + 8], board[col + 12]];
-            if (direction === 'down') column.reverse();
-            let newColumn = mergeTiles(column);
-            if (direction === 'down') newColumn.reverse();
-            for (let row = 0; row < 4; row++) {
-                if (board[col + row * 4] !== newColumn[row]) moved = true;
-                board[col + row * 4] = newColumn[row];
-            }
-        }
-    } else if (direction === 'left' || direction === 'right') {
-        for (let row = 0; row < 4; row++) {
-            let line = [board[row * 4], board[row * 4 + 1], board[row * 4 + 2], board[row * 4 + 3]];
-            if (direction === 'right') line.reverse();
-            let newLine = mergeTiles(line);
-            if (direction === 'right') newLine.reverse();
-            for (let col = 0; col < 4; col++) {
-                if (board[row * 4 + col] !== newLine[col]) moved = true;
-                board[row * 4 + col] = newLine[col];
-            }
+    heal() {
+        if (this.hp < this.maxHp && this.food > 0) {
+            this.hp += 1;
+            this.food -= 1;
         }
     }
-    return moved;
-}
 
-function mergeTiles(line) {
-    let newLine = line.filter(val => val !== null);
-    for (let i = 0; i < newLine.length - 1; i++) {
-        if (newLine[i] === newLine[i + 1]) {
-            newLine[i] *= 2;
-            newLine[i + 1] = null;
+    gatherFood() {
+        setInterval(() => {
+            this.food += 1;
+        }, 3000);
+    }
+
+    fight(enemy) {
+        enemy.hp -= this.damage;
+        if (enemy.hp <= 0) {
+            this.kills += 1;
+            this.gold += 1;
+            this.updateRank();
         }
     }
-    return newLine.filter(val => val !== null).concat(Array(4 - newLine.filter(val => val !== null).length).fill(null));
+
+    updateRank() {
+        if (this.kills >= 30) {
+            this.rank = 'Platinum';
+            this.maxHp = 25;
+            this.damage = 5;
+        } else if (this.kills >= 20) {
+            this.rank = 'Gold';
+            this.maxHp = 20;
+            this.damage = 4;
+        } else if (this.kills >= 10) {
+            this.rank = 'Silver';
+            this.maxHp = 15;
+            this.damage = 3;
+        }
+    }
 }
 
-document.addEventListener('keydown', (event) => {
-    let moved = false;
-    switch (event.key) {
-        case 'ArrowUp': moved = moveTiles('up'); break;
-        case 'ArrowDown': moved = moveTiles('down'); break;
-        case 'ArrowLeft': moved = moveTiles('left'); break;
-        case 'ArrowRight': moved = moveTiles('right'); break;
+class Enemy {
+    constructor() {
+        this.hp = 5;
+        this.damage = 2;
     }
-    if (moved) {
-        addRandomTile();
-        drawBoard();
-    }
+}
+
+// Example of creating a character
+const characters = [];
+const names = ["Alice", "Bob", "Charlie", "Dave"];
+const images = ["path/to/image1.png", "path/to/image2.png", "path/to/image3.png", "path/to/image4.png"];
+
+names.forEach((name, index) => {
+    const character = new Character(name, images[index]);
+    characters.push(character);
+    const charElement = document.createElement('div');
+    charElement.className = 'character';
+    charElement.innerText = name;
+    document.getElementById('characters').appendChild(charElement);
 });
 
-addRandomTile();
-addRandomTile();
-drawBoard();
+// Add drag-and-drop functionality
+const sections = document.querySelectorAll('.section');
+const charElements = document.querySelectorAll('.character');
+
+charElements.forEach(charElement => {
+    charElement.addEventListener('dragstart', () => {
+        charElement.classList.add('dragging');
+    });
+
+    charElement.addEventListener('dragend', () => {
+        charElement.classList.remove('dragging');
+    });
+});
+
+sections.forEach(section => {
+    section.addEventListener('dragover', e => {
+        e.preventDefault();
+        const dragging = document.querySelector('.dragging');
+        section.appendChild(dragging);
+    });
+});
