@@ -1,20 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="resting" class="section">Resting</div>
-    <div id="gathering" class="section">Gathering</div>
-    <div id="fighting" class="section">Fighting</div>
+    <div class="game-container">
+        <!-- Left section: Resting -->
+        <div class="section" id="resting">
+            <h2>Resting</h2>
+            <div id="resting-info">
+                <p>HP: <span id="resting-hp">10</span></p>
+                <p>Food: <span id="resting-food">10</span></p>
+                <button id="rest-button">Rest</button>
+            </div>
+        </div>
 
-    <div id="characters">
-        <!-- Characters will be dynamically added here -->
+        <!-- Middle section: Food gathering -->
+        <div class="section" id="food">
+            <h2>Food Gathering</h2>
+            <div id="food-info">
+                <p>Food per 3 seconds</p>
+                <div id="food-bar">
+                    <div id="food-progress"></div>
+                </div>
+                <p id="food-status">Ready to gather</p>
+            </div>
+        </div>
+
+        <!-- Right section: Enemies -->
+        <div class="section" id="enemies">
+            <h2>Enemies</h2>
+            <div id="enemy-info">
+                <!-- Enemies will appear here -->
+            </div>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
