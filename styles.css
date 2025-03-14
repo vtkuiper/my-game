@@ -50,6 +50,10 @@ body {
     color: #000;
     border-radius: 10px;
     height: 50px; /* Halve lengte van de breedte */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000; /* Normale rand */
 }
 
 .bottom-bar {
@@ -64,8 +68,8 @@ body {
 }
 
 #hire-button {
-    background-color: #ff9999; /* Lichtrood */
-    color: #000;
+    background-color: #6a0dad; /* Paars */
+    color: #f0f0f0; /* Wit, niet oog brandend */
     padding: 10px;
     border: none;
     cursor: pointer;
@@ -75,7 +79,7 @@ body {
 .character-slot {
     width: 18%;
     height: 120px;
-    background-color: #99ff99; /* Lichtgroen */
+    background-color: #8a2be2; /* Lichte paarse kleur */
     margin: 5px;
     display: flex;
     align-items: center;
@@ -83,6 +87,7 @@ body {
     color: #000;
     border: 1px solid #000;
     border-radius: 10px;
+    border: 2px dashed #f0f0f0; /* Wit kartel randje */
 }
 
 .character-profile {
