@@ -41,7 +41,7 @@ body {
     background-color: #6a0dad; /* Paars */
     padding: 10px;
     border-radius: 10px;
-    height: auto; /* Automatische hoogte */
+    height: 350px; /* Vaste hoogte */
 }
 
 .box-title {
