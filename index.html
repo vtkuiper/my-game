@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Tellers voor Gold en Food bovenaan -->
+    <div class="resource-counters">
+        <p>Gold: <span id="gold-count">0</span></p>
+        <p>Food: <span id="food-count">0</span></p>
+    </div>
+
     <div class="game-container">
         <!-- Left section: Resting -->
         <div class="section" id="resting" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -26,12 +32,6 @@
             <div id="enemy-info"></div>
             <div id="enemy-characters"></div>
         </div>
-    </div>
-
-    <!-- Tellers voor Gold en Food -->
-    <div class="resource-counters">
-        <p>Gold: <span id="gold-count">0</span></p>
-        <p>Food: <span id="food-count">0</span></p>
     </div>
 
     <!-- Beschikbare Karakters onderaan -->
