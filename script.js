@@ -1,10 +1,3 @@
-// Game data en variabelen
-let characters = [];
-let maxCharacters = 10;
-let maxCharactersPerSection = 5;
-let gold = 0;
-let food = 0;
-
 // Karakter constructor
 function Character(name) {
     this.name = name;
@@ -17,6 +10,7 @@ function Character(name) {
     this.foodGatheringProgress = 0;  // Laadbalk voor voedselverzameling
     this.isResting = false; // Controleert of het karakter rust
     this.foodBar = null;  // Houdt de foodbalk bij
+    this.section = null; // Houdt bij waar de karakter zich bevindt (resting, food, fighting)
 }
 
 // Genereer een random naam voor karakters
@@ -50,6 +44,16 @@ function updateCharacterList() {
         charDiv.setAttribute('id', 'character-' + index);
         charDiv.setAttribute('ondragstart', 'drag(event)');
 
+        // Laadbalk in het profiel van het karakter
+        let foodBarHTML = '';
+        if (character.foodBar) {
+            foodBarHTML = `
+                <div class="food-bar">
+                    <div class="food-bar-fill" style="width: ${character.foodBar.progress}%"></div>
+                </div>
+            `;
+        }
+
         charDiv.innerHTML = `
             <img src="${character.image}" alt="${character.name}" />
             <div class="character-info">
@@ -57,16 +61,11 @@ function updateCharacterList() {
                 <p>HP: ${character.hp}/${character.maxHp}</p>
                 <p>Damage: ${character.damage}</p>
                 <p>Rank: ${character.rank}</p>
+                ${foodBarHTML}
             </div>
         `;
         charListContainer.appendChild(charDiv);
     });
-}
-
-// Update de food en gold tellers
-function updateResourceCounters() {
-    document.getElementById('gold-count').innerText = gold;
-    document.getElementById('food-count').innerText = food;
 }
 
 // Laat het karakter slepen
@@ -111,6 +110,9 @@ function drop(event) {
         character.foodBar.fill.style.width = '0%';  // Zet de progress terug naar 0%
         character.foodBar = null;  // Verwijder de foodbalk
     }
+
+    // Update de sectie van het karakter
+    character.section = sectionId;
 }
 
 // Start het voedsel verzamelen voor een karakter
@@ -123,9 +125,7 @@ function startFoodGathering(character, section) {
         foodFill.classList.add('food-bar-fill');
         foodBar.appendChild(foodFill);
 
-        // Voeg de voedselbalk toe aan de food sectie
-        section.appendChild(foodBar);
-
+        // Voeg de voedselbalk toe aan het karakterprofiel
         character.foodBar = { fill: foodFill, progress: 0 };
 
         // Start de voedselverzameling
