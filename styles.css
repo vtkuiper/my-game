@@ -41,7 +41,7 @@ body {
     background-color: #6a0dad; /* Paars */
     padding: 10px;
     border-radius: 10px;
-    height: auto; /* Automatische hoogte */
+    height: 30%; /* Vierkant maken */
 }
 
 .box-title {
@@ -56,8 +56,7 @@ body {
     padding: 20px; /* Langer maken */
     color: #f0f0f0; /* Wit */
     border-radius: 10px;
-    width: 100px; /* Vierkant maken */
-    height: 100px; /* Vierkant maken */
+    height: 80px; /* Korter maken */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,8 +65,7 @@ body {
 
 #encounters-1, #encounters-2, #encounters-3 {
     border: 1px solid #000; /* Normale rand */
-    width: 100px; /* Vierkant maken */
-    height: 100px; /* Vierkant maken */
+    height: 80px; /* Korter maken */
 }
 
 .bottom-bar {
