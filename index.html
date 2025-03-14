@@ -3,34 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Management</title>
+    <title>Character Management Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="resource-bar">
-        <div id="gold-counter">Gold: 0</div>
-        <div id="food-counter">Food: 0</div>
+    <!-- Tellers voor Gold en Food bovenaan -->
+    <div class="resource-counters">
+        <p>Gold: <span id="gold-count">0</span></p>
+        <p>Food: <span id="food-count">0</span></p>
     </div>
-    
-    <div id="available-characters" class="game-section">
-        <h3>Available Characters</h3>
+
+    <div class="game-container">
+        <!-- Left section: Resting -->
+        <div class="section" id="resting" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>Resting</h2>
+            <div id="resting-characters"></div>
+        </div>
+
+        <!-- Middle section: Food Gathering -->
+        <div class="section" id="food" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>Food Gathering</h2>
+            <div id="food-characters"></div>
+        </div>
+
+        <!-- Right section: Fighting -->
+        <div class="section" id="enemies" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>Fighting</h2>
+            <div id="enemy-info"></div>
+            <div id="enemy-characters"></div>
+        </div>
+    </div>
+
+    <!-- Beschikbare Karakters onderaan -->
+    <div id="character-container">
+        <h2>Available Characters</h2>
         <div id="character-list"></div>
-    </div>
-
-    <div id="resting" class="game-section">
-        <h3>Resting</h3>
-    </div>
-
-    <div id="food" class="game-section">
-        <h3>Food Gathering</h3>
-    </div>
-
-    <div id="fighting" class="game-section">
-        <h3>Fighting</h3>
-    </div>
-
-    <div id="enemy" class="game-section">
-        <h3>Enemy</h3>
     </div>
 
     <script src="script.js"></script>
