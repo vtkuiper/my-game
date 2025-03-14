@@ -6,14 +6,13 @@ body {
 }
 
 .top-bar {
-    width: 95%;
+    width: 100%; /* Volledig de randen raken */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     background-color: #4b0082; /* Paars */
-    border-radius: 10px;
 }
 
 .left-text, .right-text, .box-title, #hire-button {
@@ -41,7 +40,7 @@ body {
     background-color: #6a0dad; /* Paars */
     padding: 10px;
     border-radius: 10px;
-    height: 30%; /* Vierkant maken */
+    height: 300px; /* Groot genoeg voor subboxes */
 }
 
 .box-title {
@@ -77,6 +76,8 @@ body {
     padding: 10px;
     background-color: #4b0082; /* Paars */
     border-radius: 10px;
+    position: absolute;
+    bottom: 10px; /* Een paar pixels van de onderkant af */
 }
 
 #hire-button {
