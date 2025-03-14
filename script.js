@@ -1,12 +1,20 @@
-document.getElementById('hire-button').addEventListener('click', function() {
-    const slots = document.querySelectorAll('.character-slot');
-    const emptySlot = Array.from(slots).find(slot => slot.innerHTML === '');
+let gold = 50;
 
-    if (emptySlot) {
-        const character = createCharacterProfile();
-        emptySlot.appendChild(character);
+document.getElementById('hire-button').addEventListener('click', function() {
+    if (gold >= 10) {
+        const slots = document.querySelectorAll('.character-slot');
+        const emptySlot = Array.from(slots).find(slot => slot.innerHTML === '');
+
+        if (emptySlot) {
+            const character = createCharacterProfile();
+            emptySlot.appendChild(character);
+            gold -= 10;
+            document.getElementById('gold-counter').textContent = `Gold: ${gold}`;
+        } else {
+            alert('Alle vakjes zijn vol!');
+        }
     } else {
-        alert('Alle vakjes zijn vol!');
+        alert('Niet genoeg goud!');
     }
 });
 
@@ -26,13 +34,16 @@ function createCharacterProfile() {
     name.textContent = getRandomName();
     info.appendChild(name);
 
+    const gender = document.createElement('div');
+    gender.textContent = getRandomGender();
+    info.appendChild(gender);
+
     const details = document.createElement('div');
     details.classList.add('details');
     details.innerHTML = `
-        Max HP: ${getRandomNumber(50, 100)}<br>
-        Damage: ${getRandomNumber(10, 20)}<br>
-        Rank: ${getRandomRank()}<br>
-        ${getRandomGender()}
+        Max HP: 10<br>
+        Damage: 2<br>
+        Rank: Bronze
     `;
     info.appendChild(details);
 
@@ -44,15 +55,6 @@ function createCharacterProfile() {
 function getRandomName() {
     const names = ['Aragorn', 'Legolas', 'Gimli', 'Frodo', 'Samwise'];
     return names[Math.floor(Math.random() * names.length)];
-}
-
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getRandomRank() {
-    const ranks = ['Novice', 'Warrior', 'Knight', 'Lord'];
-    return ranks[Math.floor(Math.random() * ranks.length)];
 }
 
 function getRandomGender() {
