@@ -1,11 +1,9 @@
-// Game data en variabelen
+// Game data and variables
 let characters = [];
-let foodAmount = 10;
-let enemies = [];
 let maxCharacters = 10;
-let maxCharactersPerVak = 5;
+let maxCharactersPerSection = 5;
 
-// Karakter constructor
+// Character constructor
 function Character(name) {
     this.name = name;
     this.hp = 10;
@@ -17,100 +15,69 @@ function Character(name) {
     this.image = `https://picsum.photos/50/50?random=${Math.floor(Math.random() * 1000)}`;  // Random image
 }
 
-// Functie om random naam te genereren
+// Generate random names for characters
 function generateRandomName() {
     const names = ['Axel', 'Lena', 'Finn', 'Sophie', 'Kai', 'Emma'];
     return names[Math.floor(Math.random() * names.length)];
 }
 
-// Karakter aanmaken
+// Create a new character
 function createCharacter() {
     if (characters.length >= maxCharacters) {
-        alert("Maximaal 10 karakters zijn toegestaan.");
+        alert("You can only have 10 characters.");
         return;
     }
 
     const name = generateRandomName();
     const character = new Character(name);
     characters.push(character);
-    updateCharacterDisplay();
+    updateCharacterList();
 }
 
-// Update weergave van karakters in de secties
-function updateCharacterDisplay() {
-    updateVak('resting', characters.slice(0, maxCharactersPerVak));
-    updateVak('food', characters.slice(maxCharactersPerVak, maxCharactersPerVak * 2));
-    updateVak('enemies', characters.slice(maxCharactersPerVak * 2, maxCharactersPerVak * 3));
-}
+// Update the character list in the "Available Characters" section
+function updateCharacterList() {
+    const charListContainer = document.getElementById('character-list');
+    charListContainer.innerHTML = ''; // Clear the current list
 
-// Update karakters in een vak
-function updateVak(vakId, vakCharacters) {
-    const vak = document.getElementById(`${vakId}-characters`);
-    vak.innerHTML = ''; // Maak de vakken leeg voor de update
-
-    vakCharacters.forEach(character => {
+    characters.forEach((character, index) => {
         const charDiv = document.createElement('div');
         charDiv.classList.add('character');
+        charDiv.setAttribute('draggable', true);
+        charDiv.setAttribute('id', 'character-' + index);
+        charDiv.setAttribute('ondragstart', 'drag(event)');
         charDiv.innerHTML = `<img src="${character.image}" alt="${character.name}" />`;
-        vak.appendChild(charDiv);
+        charListContainer.appendChild(charDiv);
     });
 }
 
-// Knop om te rusten (HP herstellen)
-document.getElementById('rest-button').addEventListener('click', () => {
-    const character = characters[0];
-    if (character.food > 0 && character.hp < character.maxHp) {
-        character.hp++;
-        character.food--;
-        updateRestingInfo();
+// Allow drag-and-drop
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event) {
+    event.preventDefault();
+    const characterId = event.dataTransfer.getData("text");
+    const character = characters[parseInt(characterId.split('-')[1])];
+    const sectionId = event.target.id;
+
+    // Ensure the section can hold more characters
+    const section = document.getElementById(sectionId);
+    if (section.children.length >= maxCharactersPerSection) {
+        alert("This section is full!");
+        return;
     }
-});
 
-// Voedsel verzamelen
-function startFoodGathering() {
-    const progressBar = document.getElementById('food-progress');
-    let progress = 0;
-    const interval = setInterval(() => {
-        if (progress < 100) {
-            progress += 10;
-            progressBar.style.width = `${progress}%`;
-        } else {
-            clearInterval(interval);
-            foodAmount++;
-            document.getElementById('food-status').textContent = `Collected 1 food. Total: ${foodAmount}`;
-            progress = 0;
-            progressBar.style.width = '0%';
-        }
-    }, 3000);
+    // Move the character to the section
+    const charDiv = document.getElementById(characterId);
+    section.appendChild(charDiv);
 }
 
-startFoodGathering();
-
-// Enemies genereren
-function generateEnemy() {
-    const enemy = {
-        hp: 5,
-        damage: 2,
-        kills: 0
-    };
-    enemies.push(enemy);
-    displayEnemies();
-}
-
-// Display enemies
-function displayEnemies() {
-    const enemyContainer = document.getElementById('enemy-info');
-    enemyContainer.innerHTML = '';
-    enemies.forEach((enemy, index) => {
-        const enemyElement = document.createElement('div');
-        enemyElement.classList.add('enemy');
-        enemyElement.innerHTML = `
-            <p>Enemy ${index + 1}</p>
-            <p>HP: ${enemy.hp}</p>
-            <p>Damage: ${enemy.damage}</p>
-        `;
-        enemyContainer.appendChild(enemyElement);
-    });
-}
-
-generateEnemy();  // Maak een vijand aan voor de test
+// Create characters and update the list when the game loads
+createCharacter();
+createCharacter();
+createCharacter(); // You can call createCharacter() multiple times to create more characters
