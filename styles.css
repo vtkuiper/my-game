@@ -58,6 +58,11 @@ body {
     border: 2px dashed #f0f0f0; /* Wit kartel randje */
 }
 
+#encounters-1, #encounters-2, #encounters-3 {
+    border: 1px solid #000; /* Normale rand */
+    height: 70px; /* Langer maken */
+}
+
 .bottom-bar {
     width: 95%;
     margin: 0 auto 20px auto;
