@@ -105,9 +105,11 @@ function drop(event) {
 function spawnEnemy(adventureId) {
     const encounterId = adventureId.replace('adventure', 'encounters');
     const encounterBox = document.getElementById(encounterId);
+    console.log(`Spawning enemy in: ${encounterId}`);
     if (encounterBox.childElementCount === 0) {
         const enemy = createEnemyProfile();
         encounterBox.appendChild(enemy);
+        console.log(`Enemy spawned in: ${encounterId}`);
         startBattle(adventureId, encounterId);
     }
 }
