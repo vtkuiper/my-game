@@ -1,9 +1,9 @@
-// Game data and variables
+// Game data en variabelen
 let characters = [];
 let maxCharacters = 10;
 let maxCharactersPerSection = 5;
 
-// Character constructor
+// Karakter constructor
 function Character(name) {
     this.name = name;
     this.hp = 10;
@@ -15,16 +15,16 @@ function Character(name) {
     this.image = `https://picsum.photos/50/50?random=${Math.floor(Math.random() * 1000)}`;  // Random image
 }
 
-// Generate random names for characters
+// Genereer een random naam voor karakters
 function generateRandomName() {
     const names = ['Axel', 'Lena', 'Finn', 'Sophie', 'Kai', 'Emma'];
     return names[Math.floor(Math.random() * names.length)];
 }
 
-// Create a new character
+// Maak een nieuw karakter
 function createCharacter() {
     if (characters.length >= maxCharacters) {
-        alert("You can only have 10 characters.");
+        alert("Je kunt maximaal 10 karakters hebben.");
         return;
     }
 
@@ -34,10 +34,10 @@ function createCharacter() {
     updateCharacterList();
 }
 
-// Update the character list in the "Available Characters" section
+// Werk de lijst van beschikbare karakters bij
 function updateCharacterList() {
     const charListContainer = document.getElementById('character-list');
-    charListContainer.innerHTML = ''; // Clear the current list
+    charListContainer.innerHTML = ''; // Verwijder de huidige lijst
 
     characters.forEach((character, index) => {
         const charDiv = document.createElement('div');
@@ -45,12 +45,21 @@ function updateCharacterList() {
         charDiv.setAttribute('draggable', true);
         charDiv.setAttribute('id', 'character-' + index);
         charDiv.setAttribute('ondragstart', 'drag(event)');
-        charDiv.innerHTML = `<img src="${character.image}" alt="${character.name}" />`;
+
+        charDiv.innerHTML = `
+            <img src="${character.image}" alt="${character.name}" />
+            <div class="character-info">
+                <p><strong>${character.name}</strong></p>
+                <p>HP: ${character.hp}/${character.maxHp}</p>
+                <p>Damage: ${character.damage}</p>
+                <p>Rank: ${character.rank}</p>
+            </div>
+        `;
         charListContainer.appendChild(charDiv);
     });
 }
 
-// Allow drag-and-drop
+// Laat het karakter slepen
 function allowDrop(event) {
     event.preventDefault();
 }
@@ -65,19 +74,19 @@ function drop(event) {
     const character = characters[parseInt(characterId.split('-')[1])];
     const sectionId = event.target.id;
 
-    // Ensure the section can hold more characters
+    // Zorg ervoor dat de sectie niet vol is
     const section = document.getElementById(sectionId);
     if (section.children.length >= maxCharactersPerSection) {
-        alert("This section is full!");
+        alert("Deze sectie is vol!");
         return;
     }
 
-    // Move the character to the section
+    // Verplaats het karakter naar de sectie
     const charDiv = document.getElementById(characterId);
     section.appendChild(charDiv);
 }
 
-// Create characters and update the list when the game loads
+// Maak karakters aan en werk de lijst bij
 createCharacter();
 createCharacter();
-createCharacter(); // You can call createCharacter() multiple times to create more characters
+createCharacter(); // Maak meer karakters aan naar wens
