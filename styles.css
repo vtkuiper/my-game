@@ -55,7 +55,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #000; /* Normale rand */
+    border: 2px dashed #f0f0f0; /* Wit kartel randje */
 }
 
 .bottom-bar {
@@ -98,7 +98,7 @@ body {
     border: 1px solid #000;
     border-radius: 10px;
     padding: 5px;
-    background-color: #556b2f; /* Donker groen, moeras kleur */
+    background-color: #4b5320; /* Donker olijfgroen */
 }
 
 .character-profile img {
