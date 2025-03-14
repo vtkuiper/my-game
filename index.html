@@ -17,26 +17,39 @@
         <!-- Left section: Resting -->
         <div class="section" id="resting" ondrop="drop(event)" ondragover="allowDrop(event)">
             <h2>Resting</h2>
-            <div id="resting-characters"></div>
+            <div class="slot-container">
+                <!-- Slots for resting characters -->
+            </div>
         </div>
 
         <!-- Middle section: Food Gathering -->
         <div class="section" id="food" ondrop="drop(event)" ondragover="allowDrop(event)">
             <h2>Food Gathering</h2>
-            <div id="food-characters"></div>
+            <div class="slot-container">
+                <!-- Slots for food gathering characters -->
+            </div>
         </div>
 
         <!-- Right section: Fighting -->
         <div class="section" id="fighting" ondrop="drop(event)" ondragover="allowDrop(event)">
             <h2>Fighting</h2>
-            <div id="enemy-info"></div>
-            <div id="enemy-characters"></div>
+            <div class="slot-container">
+                <!-- Slots for fighting characters -->
+            </div>
+        </div>
+
+        <!-- New section: Character Slots -->
+        <div class="section" id="character-slots" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>Character Slots</h2>
+            <div class="slot-container">
+                <!-- Slots where characters can be specifically placed -->
+            </div>
         </div>
     </div>
 
     <!-- Beschikbare Karakters onderaan -->
     <div id="character-container">
-        <h2>Available Characters</h2>
+        <h2 class="available-characters">Available Characters</h2>
         <div id="character-list"></div>
     </div>
 
