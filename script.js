@@ -97,7 +97,7 @@ function drop(event) {
 
     // Als het karakter in de food gathering sectie staat, start de voedselbalk
     if (sectionId === "food") {
-        startFoodGathering(character);
+        startFoodGathering(character, section);
     }
 
     // Als het karakter in de resting sectie staat, herstel HP met food
@@ -114,7 +114,7 @@ function drop(event) {
 }
 
 // Start het voedsel verzamelen voor een karakter
-function startFoodGathering(character) {
+function startFoodGathering(character, section) {
     // Maak een nieuwe foodbalk als die er nog niet is
     if (!character.foodBar) {
         const foodBar = document.createElement('div');
@@ -123,8 +123,7 @@ function startFoodGathering(character) {
         foodFill.classList.add('food-bar-fill');
         foodBar.appendChild(foodFill);
 
-        // Voeg de voedselbalk toe aan het karakter in de food sectie
-        const section = document.getElementById('food');
+        // Voeg de voedselbalk toe aan de food sectie
         section.appendChild(foodBar);
 
         character.foodBar = { fill: foodFill, progress: 0 };
@@ -138,7 +137,7 @@ function startFoodGathering(character) {
                 clearInterval(interval);
                 food += 1;  // Voeg 1 food toe
                 updateResourceCounters();
-                startFoodGathering(character);  // Begin opnieuw met verzamelen
+                startFoodGathering(character, section);  // Begin opnieuw met verzamelen als het karakter nog in de sectie is
             }
         }, 100);  // Elke 100ms voegt de balk 1% toe
     }
