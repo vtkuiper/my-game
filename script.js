@@ -13,7 +13,7 @@ function Character(name) {
     this.damage = 2;
     this.kills = 0;
     this.rank = "Bronze";
-    this.image = `https://picsum.photos/80/80?random=${Math.floor(Math.random() * 1000)}`;  // Random image
+    this.image = `https://picsum.photos/60/60?random=${Math.floor(Math.random() * 1000)}`;  // Random image
     this.foodGatheringProgress = 0;  // Laadbalk voor voedselverzameling
     this.isResting = false; // Controleert of het karakter rust
     this.foodBar = null;  // Houdt de foodbalk bij
@@ -108,6 +108,7 @@ function drop(event) {
     // Als het karakter niet meer in food gathering staat, stop de foodbar
     if (sectionId !== "food" && character.foodBar) {
         clearInterval(character.foodBar.interval);  // Stop de voedselverzameling
+        character.foodBar.fill.style.width = '0%';  // Zet de progress terug naar 0%
         character.foodBar = null;  // Verwijder de foodbalk
     }
 }
