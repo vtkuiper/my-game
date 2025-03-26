@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Background</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medieval Fantasy Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="top-bar">
-    <div class="window"></div>
-    <div class="window"></div>
-    <div class="window"></div>
-    <div class="window"></div>
-  </div>
-  <div id="enemy" class="enemy"></div>
-  <canvas id="particle-canvas"></canvas>
-  <script src="script.js"></script>
+    <div class="top-bar">Medieval Fantasy Game</div>
+    <div class="container">
+        <div class="left-panel">
+            <div class="box">Box 1</div>
+            <div class="box">Box 2</div>
+            <div class="box">Box 3</div>
+            <div class="box">Box 4</div>
+        </div>
+        <div class="center-panel">
+            <div class="enemy">
+                <div class="enemy-name">Enemy Name</div>
+                <img src="enemy.png" alt="Enemy" id="enemy">
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="shop">
+                <button id="upgrade">Upgrade Click (10 Gold)</button>
+                <div>Gold: <span id="gold">0</span></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
