@@ -1,49 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medieval Fantasy Game</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Background</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="top-bar">
-        <div class="left-text">Linker tekst</div>
-        <img src="image.jpg" alt="Afbeelding" class="center-image">
-        <div class="right-text" id="gold-counter">Gold: 50</div>
-        <div class="right-text" id="food-counter">Food: 20</div>
-    </div>
-    
-    <div class="main-content">
-        <div class="box" id="rest-box">
-            <div class="box-title">Rest</div>
-            <div class="sub-box" id="rest-1">Vak 1</div>
-            <div class="sub-box" id="rest-2">Vak 2</div>
-            <div class="sub-box" id="rest-3">Vak 3</div>
-        </div>
-        <div class="box" id="adventure-box">
-            <div class="box-title">Adventure</div>
-            <div class="sub-box" id="adventure-1">Vak 1</div>
-            <div class="sub-box" id="adventure-2">Vak 2</div>
-            <div class="sub-box" id="adventure-3">Vak 3</div>
-        </div>
-        <div class="box" id="encounters-box">
-            <div class="box-title">Encounters</div>
-            <div class="sub-box" id="encounters-1">Vak 1</div>
-            <div class="sub-box" id="encounters-2">Vak 2</div>
-            <div class="sub-box" id="encounters-3">Vak 3</div>
-        </div>
-    </div>
-    
-    <div class="bottom-bar">
-        <button id="hire-button">Hire (10 gold)</button>
-        <div class="character-slot"></div>
-        <div class="character-slot"></div>
-        <div class="character-slot"></div>
-        <div class="character-slot"></div>
-        <div class="character-slot"></div>
-    </div>
-
-    <script src="script.js"></script>
+  <div class="top-bar">
+    <div class="window"></div>
+    <div class="window"></div>
+    <div class="window"></div>
+    <div class="window"></div>
+  </div>
+  <div id="enemy" class="enemy"></div>
+  <canvas id="particle-canvas"></canvas>
+  <script src="script.js"></script>
 </body>
 </html>
