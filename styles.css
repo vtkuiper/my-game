@@ -6,6 +6,10 @@ body {
     padding: 0;
 }
 
+.top-space {
+    height: 20px;
+}
+
 .top-bar {
     background: linear-gradient(to right, #4b0082, #008000);
     padding: 10px;
@@ -15,12 +19,15 @@ body {
 
 .container {
     display: flex;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 70px);
 }
 
 .left-panel, .right-panel {
     width: 20%;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .center-panel {
@@ -37,6 +44,16 @@ body {
     margin: 10px 0;
     padding: 20px;
     text-align: center;
+    height: 150px;
+}
+
+.hire-btn {
+    margin-bottom: 10px;
+}
+
+.character-img {
+    width: 50px;
+    height: 50px;
 }
 
 .enemy {
@@ -46,6 +63,21 @@ body {
 .enemy-name {
     font-size: 20px;
     margin-bottom: 10px;
+}
+
+.hp-bar {
+    width: 100px;
+    height: 10px;
+    background-color: #ff0000;
+    margin: 10px auto;
+    position: relative;
+}
+
+.hp-fill {
+    width: 100%;
+    height: 100%;
+    background-color: #00ff00;
+    position: absolute;
 }
 
 .shop {
