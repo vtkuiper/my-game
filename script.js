@@ -1,209 +1,70 @@
-let gold = 50;
-let food = 20;
+// Get references to the button and canvas elements
+const enemy = document.getElementById("enemy");
+const canvas = document.getElementById("particle-canvas");
+const ctx = canvas.getContext("2d");
 
-document.getElementById('hire-button').addEventListener('click', function() {
-    if (gold >= 10) {
-        const slots = document.querySelectorAll('.character-slot');
-        const emptySlot = Array.from(slots).find(slot => slot.innerHTML.trim() === '');
-
-        if (emptySlot) {
-            const character = createCharacterProfile();
-            emptySlot.appendChild(character);
-            gold -= 10;
-            document.getElementById('gold-counter').textContent = `Gold: ${gold}`;
-        } else {
-            alert('Alle vakjes zijn vol!');
-        }
-    } else {
-        alert('Niet genoeg goud!');
-    }
-});
-
-function createCharacterProfile() {
-    const profile = document.createElement('div');
-    profile.classList.add('character-profile');
-    profile.draggable = true;
-    profile.id = `character-${Date.now()}`;
-    profile.addEventListener('dragstart', dragStart);
-    profile.addEventListener('dragend', dragEnd);
-
-    const img = document.createElement('img');
-    img.src = 'profile.jpg'; // Voeg hier de juiste afbeelding toe
-    profile.appendChild(img);
-
-    const info = document.createElement('div');
-    info.classList.add('character-info');
-
-    const name = document.createElement('div');
-    name.classList.add('name');
-    name.textContent = getRandomName(profile.id);
-    info.appendChild(name);
-
-    const gender = document.createElement('div');
-    gender.textContent = getRandomGender();
-    info.appendChild(gender);
-
-    const details = document.createElement('div');
-    details.innerHTML = `
-        Max HP: 10<br>
-        Damage: 2<br>
-        Rank: Bronze
-    `;
-    info.appendChild(details);
-
-    profile.appendChild(info);
-
-    return profile;
+// Adjust canvas to fill the window
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
 
-function getRandomName(id) {
-    const maleNames = ['Aragorn', 'Legolas', 'Gimli', 'Frodo', 'Samwise'];
-    const femaleNames = ['Arwen', 'Eowyn', 'Galadriel', 'Rosie', 'Luthien'];
-    const gender = document.getElementById(id).querySelector('.character-info div:nth-child(2)').textContent;
-    const names = gender === 'Male' ? maleNames : femaleNames;
-    return names[Math.floor(Math.random() * names.length)];
-}
-
-function getRandomGender() {
-    const genders = ['Male', 'Female'];
-    return genders[Math.floor(Math.random() * genders.length)];
-}
-
-function dragStart(event) {
-    event.dataTransfer.setData('text/plain', event.target.id);
-    setTimeout(() => {
-        event.target.classList.add('hide');
-    }, 0);
-}
-
-function dragEnd(event) {
-    event.target.classList.remove('hide');
-}
-
-const boxes = document.querySelectorAll('.sub-box');
-boxes.forEach(box => {
-    box.addEventListener('dragover', dragOver);
-    box.addEventListener('drop', drop);
-});
-
-function dragOver(event) {
-    event.preventDefault();
-}
-
-function drop(event) {
-    event.preventDefault();
-    const id = event.dataTransfer.getData('text/plain');
-    const draggableElement = document.getElementById(id);
-    if (event.target.classList.contains('sub-box') && event.target.childElementCount < 2 && (event.target.id.startsWith('rest') || event.target.id.startsWith('adventure'))) {
-        event.target.appendChild(draggableElement);
-        if (event.target.id.startsWith('adventure')) {
-            spawnEnemy(event.target.id);
-        }
-    }
-}
-
-function spawnEnemy(adventureId) {
-    const encounterId = adventureId.replace('adventure', 'encounters');
-    const encounterBox = document.getElementById(encounterId);
-    console.log(`Spawning enemy in: ${encounterId}`);
-    if (encounterBox.childElementCount === 0) {
-        const enemy = createEnemyProfile();
-        encounterBox.appendChild(enemy);
-        console.log(`Enemy spawned in: ${encounterId}`);
-        startBattle(adventureId, encounterId);
-    }
-}
-
-function createEnemyProfile() {
-    const profile = document.createElement('div');
-    profile.classList.add('character-profile');
-    profile.draggable = false;
-
-    const img = document.createElement('img');
-    img.src = 'goblin.jpg'; // Voeg hier de juiste afbeelding toe
-    profile.appendChild(img);
-
-    const info = document.createElement('div');
-    info.classList.add('character-info');
-
-    const name = document.createElement('div');
-    name.classList.add('name');
-    name.textContent = 'Goblin';
-    info.appendChild(name);
-
-    const gender = document.createElement('div');
-    gender.textContent = 'Male';
-    info.appendChild(gender);
-
-    const details = document.createElement('div');
-    details.innerHTML = `
-        Max HP: 5<br>
-        Damage: 2
-    `;
-    info.appendChild(details);
-
-    profile.appendChild(info);
-
-    return profile;
-}
-
-function startBattle(adventureId, encounterId) {
-    const adventureBox = document.getElementById(adventureId);
-    const encounterBox = document.getElementById(encounterId);
-
-    const adventureCharacters = adventureBox.querySelectorAll('.character-profile');
-    const encounterCharacters = encounterBox.querySelectorAll('.character-profile');
-
-    const battleInterval = setInterval(() => {
-        if (adventureCharacters.length > 0 && encounterCharacters.length > 0) {
-            const adventureCharacter = adventureCharacters[0];
-            const encounterCharacter = encounterCharacters[0];
-
-            const adventureDetails = adventureCharacter.querySelector('.details');
-            const encounterDetails = encounterCharacter.querySelector('.details');
-
-            const adventureHp = parseInt(adventureDetails.innerHTML.match(/Max HP: (\d+)/)[1]);
-            const encounterHp = parseInt(encounterDetails.innerHTML.match(/Max HP: (\d+)/)[1]);
-
-            const adventureDamage = parseInt(adventureDetails.innerHTML.match(/Damage: (\d+)/)[1]);
-            const encounterDamage = parseInt(encounterDetails.innerHTML.match(/Damage: (\d+)/)[1]);
-
-            if (adventureHp > 0 && encounterHp > 0) {
-                adventureDetails.innerHTML = adventureDetails.innerHTML.replace(/Max HP: \d+/, `Max HP: ${adventureHp - encounterDamage}`);
-                encounterDetails.innerHTML = encounterDetails.innerHTML.replace(/Max HP: \d+/, `Max HP: ${encounterHp - adventureDamage}`);
-            }
-
-            if (encounterHp - adventureDamage <= 0) {
-                encounterBox.removeChild(encounterCharacter);
-                gold += 5;
-                document.getElementById('gold-counter').textContent = `Gold: ${gold}`;
-                clearInterval(battleInterval);
-            }
-
-            if (adventureHp - encounterDamage <= 0) {
-                adventureBox.removeChild(adventureCharacter);
-                clearInterval(battleInterval);
-            }
-        } else {
-            clearInterval(battleInterval);
-        }
-    }, 1000);
-}
-
-function healCharacters() {
-    const restBox = document.getElementById('rest-box');
-    const characters = restBox.querySelectorAll('.character-profile');
-    characters.forEach(character => {
-        if (food > 0) {
-            const details = character.querySelector('.details');
-            const hp = parseInt(details.innerHTML.match(/Max HP: (\d+)/)[1]);
-            if (hp < 10) {
-                details.innerHTML = details.innerHTML.replace(/Max HP: \d+/, `Max HP: ${hp + 1}`);
-                food -= 1;
-                document.getElementById('food-counter').textContent = `Food: ${food}`;
-            }
-        }
-    });
-}
-
-setInterval(healCharacters, 1000);
+// Particle class to manage each particle's state
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    // Random angle and speed
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * 3 + 2;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    
+    // Random size and rotation
+    this.radius = Math.random() * 3 + 3;
+    this.rotation = Math.random() * Math.PI * 2;
+    this.rotationSpeed = (Math.random() - 0.5) * 0.2;
+    
+    // Lifetime in ms (approx. 3 seconds)
+    this.life = 3000;
+    this.elapsed = 0;
+  }
+  
+  update(dt) {
+    // Move particle
+    this.x += this.vx;
+    this.y += this.vy;
+    // Apply slight friction so it slows down over time
+    this.vx *= 0.98;
+    this.vy *= 0.98;
+    // Update rotation
+    this.rotation += this.rotationSpeed;
+    // Update elapsed time
+    this.elapsed += dt;
+  }
+  
+  draw(ctx) {
+    // Compute current alpha based on lifetime progress
+    const progress = this.elapsed / this.life;
+    const alpha = Math.max(1 - progress, 0);
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
+    ctx.globalAlpha = alpha;
+    
+    // Draw a 4-point star shape.
+    // We'll draw an 8-vertex star (alternating outer and inner points)
+    const spikes = 4;
+    const outerRadius = this.radius;
+    const innerRadius = outerRadius * 0.5;
+    
+    ctx.beginPath();
+    for (let i = 0; i < spikes * 2; i++) {
+      // Alternate between outer and inner radii
+      const r = (i % 2 === 0) ? outerRadius : innerRadius;
+      const angle = (i * Math.PI) / spikes;
+      const x = Math.cos(angle) * r;
+      const y = Math.sin(angle) * r;
+     
