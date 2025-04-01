@@ -3,19 +3,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Shiny Button</title>
+    <title>Worker Profile</title>
 </head>
 <body>
-    <div class="shiny-button">
-        <div class="button-content">
-            <h2 class="text-stroke-gradient">Stroke + Gradient</h2>
-            <p><strong>Rank</strong></p>
-            <div class="colored-rectangle"></div>
-            <p>Health</p>
-            <progress class="health" max="100" value="70"></progress>
-            <p>Stamina</p>
-            <progress class="stamina" max="100" value="50"></progress>
+    <div class="container">
+        <div class="worker-card">
+            <div class="card-content">
+                <h2 class="text-stroke-gradient">Name</h2>
+                <p><strong>Race</strong></p>
+                <div class="colored-rectangle"></div>
+                <p>Health</p>
+                <progress class="health" max="3" value="3"></progress>
+                <p>Stamina</p>
+                <progress class="stamina" max="5" value="5"></progress>
+            </div>
         </div>
+        <div class="worker-profile">
+            <div class="profile-content">
+                <div class="colored-rectangle"></div>
+                <div class="profile-text">
+                    <h2 class="text-stroke-gradient">Name</h2>
+                    <p><strong>Race</strong></p>
+                    <p><strong>Health</strong></p>
+                    <progress class="health" max="3" value="3"></progress>
+                    <p><strong>Stamina</strong></p>
+                    <progress class="stamina" max="5" value="5"></progress>
+                </div>
+            </div>
+        </div>
+        <div class="standard-container">
+            <!-- Hier kunnen later dingen in komen te staan -->
+        </div>
+        <button class="custom-button">Knop</button>
     </div>
 </body>
 </html>
@@ -24,33 +43,39 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
-    background-image: linear-gradient(to bottom right, rgb(230,235,255), rgb(215,225,245));
+    justify-content: center;
+    align-items: center;
+    background-color: #2E2E2E; /* Iets lichter donkergrijs */
     margin: 0;
+    font-family: 'Rubik', sans-serif; /* Rubik-font toegevoegd */
+    color: #E6E6FA; /* Lichtpaars, bijna wit */
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start; /* Elementen naar links uitlijnen */
+    align-items: center;
+    width: 100%;
 }
 
 .text-stroke-gradient {
     font-size: 1.2rem;
-    -webkit-text-stroke: 1px #fff;
-    background-image: linear-gradient(90deg, #ff7e5f, #feb47b);
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
+    color: #E6E6FA; /* Lichtpaars, bijna wit */
+    font-weight: bold; /* Vetgedrukt */
     margin-top: -0.5rem; /* Ruimte bovenaan verder verkleind */
     margin-bottom: 0.1rem; /* Ruimte onderaan verder verkleind */
 }
 
-.shiny-button {
+.worker-card {
     width: 200px; /* Originele grootte */
     height: 400px; /* Originele grootte */
     position: relative;
-    margin: 2rem;
+    margin: 1rem; /* Minder ruimte rondom */
     padding: 1rem;
-    color: rgb(207, 248, 255);
-    border: 3px solid transparent;
+    color: #E6E6FA; /* Lichtpaars, bijna wit */
+    border: 4px solid #4B0082; /* Donkerpaars, bijna zwart, iets dikker */
     border-radius: 30px; /* Minder afgerond */
-    background-color: rgb(6, 69, 73);
-    background-image: linear-gradient(to bottom right, rgb(10,107,115), rgb(2, 10, 14)), linear-gradient(125deg, rgba(255,255,255,0) 45%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 53%);
+    background-image: linear-gradient(to bottom right, #9B30FF, #6A0DAD); /* Van lichtpaars links boven naar donkerpaars rechts onder */
     background-origin: border-box;
     background-clip: padding-box, border-box;
     background-size: 100%, 200%;
@@ -59,7 +84,27 @@ body {
     overflow: hidden;
 }
 
-.button-content {
+.worker-profile {
+    width: 400px; /* Breder dan lang */
+    height: 200px; /* Korter dan breed */
+    position: relative;
+    margin: 1rem; /* Minder ruimte rondom */
+    padding: 1rem;
+    color: #E6E6FA; /* Lichtpaars, bijna wit */
+    border: 4px solid #4B0082; /* Donkerpaars, bijna zwart, iets dikker */
+    border-radius: 30px; /* Minder afgerond */
+    background-image: linear-gradient(to bottom right, #9B30FF, #6A0DAD); /* Van lichtpaars links boven naar donkerpaars rechts onder */
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    background-size: 100%, 200%;
+    background-position: 0px, -300px; /* Startpositie aangepast */
+    text-shadow: 0px 0px 4px rgba(255,255,255,0.1);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.card-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,15 +112,43 @@ body {
     height: 100%;
 }
 
-.button-content p {
+.profile-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.profile-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 1rem;
+    text-align: left; /* Tekst naar links uitlijnen */
+}
+
+.profile-text h2 {
+    margin-left: 1rem; /* Ruimte creëren tussen "Name" en de rechthoek */
+}
+
+.profile-text p {
+    margin: 0.5rem 0;
+    text-align: left; /* Tekst naar links uitlijnen */
+    color: #E6E6FA; /* Lichtpaars, bijna wit */
+    font-weight: bold; /* Vetgedrukt */
+    margin-left: 1rem; /* Ruimte creëren tussen tekst en rechthoek */
+}
+
+.card-content p {
     margin: 0.5rem 0;
     text-align: center;
+    color: #E6E6FA; /* Lichtpaars, bijna wit */
+    font-weight: bold; /* Vetgedrukt */
 }
 
 .colored-rectangle {
-    width: 180px; /* Originele grootte */
-    height: 240px; /* Originele grootte */
-    background-color: #ff7e5f;
+    width: 150px; /* Aangepaste breedte */
+    height: 200px; /* Aangepaste hoogte */
+    background-color: #FAD6A5; /* Lichte huidskleur */
     margin: 0.3rem 0; /* Ruimte bovenaan verkleind */
     flex-shrink: 0;
 }
@@ -107,8 +180,36 @@ progress[value]::-moz-progress-bar {
 
 .health {
     --c: #F04155; /* Rode kleur voor Health */
+    font-family: 'Rubik', sans-serif; /* Rubik-font toegevoegd */
+    font-weight: bold; /* Vetgedrukt */
 }
 
 .stamina {
     --c: #FFD700; /* Gele kleur voor Stamina */
+    font-family: 'Rubik', sans-serif; /* Rubik-font toegevoegd */
+    font-weight: bold; /* Vetgedrukt */
+}
+
+.custom-button {
+    background: linear-gradient(to bottom, #00FF00, #006400); /* Van licht groen naar donker groen */
+    border: 3px solid #004B23; /* Donker groene rand, iets dikker */
+    border-radius: 10px; /* Afgeronde hoeken */
+    color: #E6FFE6; /* Lichte groen, bijna wit */
+    font-size: 1.5rem; /* Grotere tekst */
+    font-weight: bold;
+    padding: 15px 30px; /* Grotere knop */
+    cursor: pointer;
+    margin: 1rem; /* Minder ruimte rondom */
+}
+
+.standard-container {
+    width: 300px; /* Vierkant formaat */
+    height: 300px; /* Vierkant formaat */
+    border: 4px solid #8B0000; /* Donker rode rand */
+    border-radius: 20px; /* Afgeronde hoeken */
+    background-image: linear-gradient(to top right, #8B0000, #FF6347); /* Van donker rood links onder naar licht rood rechts boven */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem; /* Minder ruimte rondom */
 }
