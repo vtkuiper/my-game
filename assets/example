@@ -41,8 +41,15 @@
                 <p><strong>Race</strong></p>
                 <div class="colored-rectangle"></div>
                 <p>Reward: 20</p>
-                <p>Patience</p>
-                <progress class="patience" max="30" value="30"></progress>
+                <div class="patience-container">
+                    <p>Patience</p>
+                    <progress class="patience" max="30" value="30"></progress>
+                </div>
+            </div>
+        </div>
+        <div class="empty-profile">
+            <div class="profile-content">
+                <!-- Lege worker profile -->
             </div>
         </div>
     </div>
@@ -55,89 +62,153 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #004d40; /* Diep smaragdgroen */
+    background-color: #004d40;
     margin: 0;
-    font-family: 'Rubik', sans-serif; /* Rubik-font toegevoegd */
-    color: #E0E0E0; /* Iets lichtere zilveren tekst */
+    font-family: 'Rubik', sans-serif;
+    color: #E0E0E0;
 }
 
 .container {
     display: flex;
-    justify-content: flex-start; /* Elementen naar links uitlijnen */
-    align-items: center;
-    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 85%;
 }
 
 .text-stroke-gradient {
-    font-size: 1.2rem;
-    color: #E0E0E0; /* Iets lichtere zilveren tekst */
-    font-weight: bold; /* Vetgedrukt */
-    margin-top: -0.5rem; /* Ruimte bovenaan verder verkleind */
-    margin-bottom: 0.1rem; /* Ruimte onderaan verder verkleind */
+    font-size: 1.1rem;
+    color: #E0E0E0;
+    font-weight: bold;
+    margin-top: -0.5rem;
+    margin-bottom: 0.1rem;
 }
 
 .worker-card {
-    width: 200px; /* Originele grootte */
-    height: 400px; /* Originele grootte */
+    width: 160px;
+    height: 320px;
     position: relative;
-    margin: 1rem; /* Minder ruimte rondom */
-    padding: 1rem;
-    color: #E0E0E0; /* Iets lichtere zilveren tekst */
-    border: 4px solid #8B6F47; /* Donker goud, iets dikker */
-    border-radius: 30px; /* Minder afgerond */
-    background: linear-gradient(to bottom right, #6C3483, #1B2631); /* Gradient van diep paars naar donkerblauw */
+    margin: 0.6rem;
+    padding: 0.6rem;
+    color: #E0E0E0;
+    border: 4px solid #8B6F47;
+    border-radius: 30px;
+    background: linear-gradient(to bottom right, #6C3483, #1B2631);
     background-origin: border-box;
     background-clip: padding-box, border-box;
     background-size: 100%, 200%;
-    background-position: 0px, -300px; /* Startpositie aangepast */
+    background-position: 0px, -300px;
     text-shadow: 0px 0px 4px rgba(255,255,255,0.1);
     overflow: hidden;
 }
 
-.customer-card {
-    width: 200px; /* Originele grootte */
-    height: 400px; /* Originele grootte */
-    position: relative;
-    margin: 1rem; /* Minder ruimte rondom */
-    padding: 1rem;
-    color: #E0E0E0; /* Iets lichtere zilveren tekst */
-    border: 4px solid #8B6F47; /* Donker goud, iets dikker */
-    border-radius: 30px; /* Minder afgerond */
-    background: linear-gradient(to bottom right, #800000, #4B0000); /* Gradient van bordeauxrood naar donkerrood */
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    background-size: 100%, 200%;
-    background-position: 0px, -300px; /* Startpositie aangepast */
-    text-shadow: 0px 0px 4px rgba(255,255,255,0.1);
-    overflow: hidden;
+.worker-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Naar links uitlijnen */
+    margin: 0.6rem;
 }
 
 .worker-profile {
-    width: 400px; /* Breder dan lang */
-    height: 200px; /* Korter dan breed */
+    width: 320px;
+    height: 160px;
     position: relative;
-    margin: 1rem; /* Minder ruimte rondom */
-    padding: 1rem;
-    color: #E0E0E0; /* Iets lichtere zilveren tekst */
-    border: 4px solid #8B6F47; /* Donker goud, iets dikker */
-    border-radius: 30px; /* Minder afgerond */
-    background: linear-gradient(to bottom right, #6C3483, #1B2631); /* Gradient van diep paars naar donkerblauw */
+    margin-bottom: 0.6rem;
+    padding: 0.6rem;
+    color: #E0E0E0;
+    border: 4px solid #8B6F47;
+    border-radius: 30px;
+    background: linear-gradient(to bottom right, #6C3483, #1B2631);
     background-origin: border-box;
     background-clip: padding-box, border-box;
     background-size: 100%, 200%;
-    background-position: 0px, -300px; /* Startpositie aangepast */
+    background-position: 0px, -300px;
     text-shadow: 0px 0px 4px rgba(255,255,255,0.1);
     overflow: hidden;
     display: flex;
     align-items: center;
+}
+
+.empty-profile {
+    width: 320px;
+    height: 160px;
+    position: relative;
+    padding: 0.6rem;
+    color: #1B2631;
+    border: 4px solid #0F1A24;
+    border-radius: 30px;
+    background: #1B2631;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.standard-container {
+    width: 240px;
+    height: 240px;
+    border: 4px solid #8B6F47;
+    border-radius: 20px;
+    background-color: #1B2631;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.6rem;
+}
+
+.custom-button {
+    background: linear-gradient(to bottom, #2980B9, #2471A3);
+    border: 3px solid #8B6F47;
+    border-radius: 10px;
+    color: #FFFFFF;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 12px 24px;
+    cursor: pointer;
+    margin: 0.6rem;
+}
+
+.custom-button:hover {
+    background: linear-gradient(to bottom, #1F5A8E, #1A4B75);
+}
+
+.customer-card {
+    width: 160px;
+    height: 320px;
+    position: relative;
+    margin: 0.6rem;
+    padding: 0.6rem;
+    color: #E0E0E0;
+    border: 4px solid #8B6F47;
+    border-radius: 30px;
+    background: linear-gradient(to bottom right, #800000, #4B0000);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    background-size: 100%, 200%;
+    background-position: 0px, -300px;
+    text-shadow: 0px 0px 4px rgba(255,255,255,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Bovenaan uitlijnen */
+    justify-content: flex-start;
     height: 100%;
+}
+
+.card-content p {
+    margin: 0.4rem 0;
+    text-align: center;
+    color: #E0E0E0;
+    font-weight: bold;
+}
+
+.card-content .patience-container {
+    margin-top: auto;
+    text-align: center;
 }
 
 .profile-content {
@@ -150,42 +221,35 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 1rem;
-    text-align: left; /* Tekst naar links uitlijnen */
+    margin-left: 0.6rem;
+    text-align: left;
 }
 
 .profile-text h2 {
-    margin-left: 1rem; /* Ruimte creëren tussen "Name" en de rechthoek */
+    margin-left: 0.6rem;
 }
 
 .profile-text p {
-    margin: 0.5rem 0;
-    text-align: left; /* Tekst naar links uitlijnen */
-    color: #E0E0E0; /* Iets lichtere zilveren tekst */
-    font-weight: bold; /* Vetgedrukt */
-    margin-left: 1rem; /* Ruimte creëren tussen tekst en rechthoek */
-}
-
-.card-content p {
-    margin: 0.5rem 0;
-    text-align: center;
-    color: #E0E0E0; /* Iets lichtere zilveren tekst */
-    font-weight: bold; /* Vetgedrukt */
+    margin: 0.4rem 0;
+    text-align: left;
+    color: #E0E0E0;
+    font-weight: bold;
+    margin-left: 0.6rem;
 }
 
 .colored-rectangle {
-    width: 150px; /* Aangepaste breedte */
-    height: 200px; /* Aangepaste hoogte */
-    background-color: #FAD6A5; /* Lichte huidskleur */
-    margin: 0.3rem 0; /* Ruimte bovenaan verkleind */
+    width: 120px;
+    height: 160px;
+    background-color: #FAD6A5;
+    margin: 0.2rem 0;
     flex-shrink: 0;
 }
 
 progress[value] {
     appearance: none;
     border: none;
-    width: 180px; 
-    height: 20px;
+    width: 140px;
+    height: 16px;
     clip-path: inset(1px round 10px);
     overflow: hidden;
 }
@@ -207,47 +271,19 @@ progress[value]::-moz-progress-bar {
 }
 
 .health {
-    --c: #F04155; /* Rode kleur voor Health */
-    font-family: 'Rubik', sans-serif; /* Rubik-font toegevoegd */
-    font-weight: bold; /* Vetgedrukt */
+    --c: #F04155;
+    font-family: 'Rubik', sans-serif;
+    font-weight: bold;
 }
 
 .stamina {
-    --c: #FFD700; /* Gele kleur voor Stamina */
-    font-family: 'Rubik', sans-serif; /* Rubik-font toegevoegd */
-    font-weight: bold; /* Vetgedrukt */
+    --c: #FFD700;
+    font-family: 'Rubik', sans-serif;
+    font-weight: bold;
 }
 
 .patience {
-    --c: #2980B9; /* Blauwe kleur voor Patience */
-    font-family: 'Rubik', sans-serif; /* Rubik-font toegevoegd */
-    font-weight: bold; /* Vetgedrukt */
-}
-
-.custom-button {
-    background: linear-gradient(to bottom, #2980B9, #2471A3); /* Van licht blauw naar donker blauw */
-    border: 3px solid #8B6F47; /* Donker gouden rand, iets dikker */
-    border-radius: 10px; /* Afgeronde hoeken */
-    color: #FFFFFF; /* Witte tekst */
-    font-size: 1.5rem; /* Grotere tekst */
+    --c: #2980B9;
+    font-family: 'Rubik', sans-serif;
     font-weight: bold;
-    padding: 15px 30px; /* Grotere knop */
-    cursor: pointer;
-    margin: 1rem; /* Minder ruimte rondom */
-}
-
-.custom-button:hover {
-    background: linear-gradient(to bottom, #1F5A8E, #1A4B75); /* Donkerder blauw bij hover */
-}
-
-.standard-container {
-    width: 300px; /* Vierkant formaat */
-    height: 300px; /* Vierkant formaat */
-    border: 4px solid #8B6F47; /* Donker goud */
-    border-radius: 20px; /* Afgeronde hoeken */
-    background-color: #1B2631; /* Donkerblauw */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1rem; /* Minder ruimte rondom */
 }
